@@ -8,8 +8,36 @@ import {LoginBox} from "../component/loginBox";
 interface LoginViewProps {
 
 }
+
+const leftStyle:React.CSSProperties={
+    width:"70%",
+    border:"1px solid black",
+    float:"left",
+    height:"100%",
+    position:"absolute",
+    top:0,
+    left:0,
+}
+
+const rightStyle:React.CSSProperties={
+    width:"30%",
+    float:'right',
+    height:"100%",
+    position:"absolute",
+    top:0,
+    right:0,
+    
+}
+
 export const LoginView:React.FC<LoginViewProps> = () => {
     return (
-        <LoginBox/>
+        <>
+            <div style={leftStyle}>
+                1
+            </div>
+            <div style={rightStyle}>
+                <LoginBox/>
+            </div>
+        </>
     )
 }
