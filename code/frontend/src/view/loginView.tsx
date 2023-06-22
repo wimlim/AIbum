@@ -5,7 +5,7 @@
 import React from "react";
 import {LoginBox} from "../component/loginBox";
 import {Image} from "antd";
-import logo from "../assets/img/logo.png"
+import logo from "../assets/img/AIbum.png"
 
 interface LoginViewProps {
 
@@ -19,6 +19,10 @@ const leftStyle:React.CSSProperties={
     position:"absolute",
     top:0,
     left:0,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center"
+
 }
 
 const rightStyle:React.CSSProperties={
@@ -35,15 +39,11 @@ export const LoginView:React.FC<LoginViewProps> = () => {
     return (
         <>
             <div style={leftStyle}>
-                {/* <Image
+                { <Image
                     src={logo}
                     preview={false}
-                    style={
-                        {
-                            
-                        }
-                    }
-                /> */}
+                    
+                /> }
             </div>
             <div style={rightStyle}>
                 <LoginBox/>
