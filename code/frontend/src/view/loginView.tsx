@@ -3,7 +3,7 @@
  * @desc 登录页面
  * */
 import React from "react";
-import {LoginBox} from "../component/loginBox";
+import { LoginBox } from "../component/LoginBox";
 import {Image} from "antd";
 import logo from "../assets/img/AIbum.png"
 
