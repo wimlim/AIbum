@@ -41,14 +41,17 @@ INSTALLED_APPS = [
     'models',
 ]
 
+
+# 把csrf中间层注释掉是为了方便postman测试，正式发布时为了安全性记得加上
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middlewares.RequestFilter.MWare'
 ]
 
 ROOT_URLCONF = 'AIbum.urls'
