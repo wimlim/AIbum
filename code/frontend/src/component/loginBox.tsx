@@ -22,17 +22,6 @@ export interface RegisterProps{
     password:string,
 }
 
-const LoginBoxStyle:React.CSSProperties={
-    position:"absolute",
-    top:"50%",
-    left:"50%",
-    transform:"translate(-50%,-50%)",
-    border:"1px solid black",
-    width:'300px',
-    padding:"20px",
-    height:"300px"
-}
-
 export const LoginBox:React.FC<LoginBoxProps> = () => {
 
     const [isLogin, setIsLogin] = React.useState(true)
@@ -161,7 +150,7 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
         )
     }
     return(
-        <div style={LoginBoxStyle}>
+        <div>
             {boxContent()}
         </div>
     )
