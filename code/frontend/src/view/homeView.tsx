@@ -18,8 +18,6 @@ const { Content, Sider } = Layout;
 interface HomeViewProps {
 }
 
-
-
 export const HomeView: React.FC<HomeViewProps> = () => {
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -32,8 +30,15 @@ export const HomeView: React.FC<HomeViewProps> = () => {
             <SideBar/>             
           </Sider>
           <Layout>
-            <Layout.Header style={{ padding: 0, background: colorBgContainer }}>
-                <Header />
+            <Layout.Header 
+                style={{ 
+                    padding: 0, 
+                    background: colorBgContainer,
+                    display:'flex',
+                    justifyContent:'flex-end',
+                }}
+            >
+                <Header />  
             </Layout.Header>
             <Content style={{ margin: '0 16px',marginTop:'16px'}}>
               <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
