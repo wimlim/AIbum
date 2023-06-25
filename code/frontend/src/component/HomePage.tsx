@@ -3,7 +3,9 @@
  * @desc    首页
  */
 
+interface HomePageProps {
+}
 
-export const HomePage=()=>{
+export const HomePage:React.FC<HomePageProps> =()=>{
     return <div>首页</div>
 }

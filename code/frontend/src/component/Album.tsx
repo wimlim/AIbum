@@ -2,6 +2,11 @@
  * @file Album.tsx
  * @desc 相册
  */
-export const Album=()=>{
+
+interface AlbumProps {
+}
+
+
+export const Album:React.FC<AlbumProps> =()=>{
     return <div>相册</div>
 }

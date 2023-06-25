@@ -26,9 +26,15 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
 
     const [isLogin, setIsLogin] = React.useState(true)
 
-    const onFinish=(values:any)=>
-    {
-        console.log('Recieved values of form: ', values)
+    const onFinishLogin=(values:any)=>{
+        console.log("login form values",values)
+        //TODO:发送数据给后端请求用户信息
+    }
+
+    const onFinishRegister=(values:any)=>{
+        console.log("register form values",values)
+        setIsLogin(true)
+        //TODO:发送数据给后端
     }
 
     const loginButton=()=>
@@ -72,7 +78,7 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
         return (
             <Form
                 name="AIbum_login"
-                onFinish={onFinish}
+                onFinish={onFinishLogin}
             >
                 <Form.Item
                     name="account"
@@ -97,7 +103,7 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
         return (
             <Form
                 name="AIbum_register"
-                onFinish={onFinish}
+                onFinish={onFinishRegister}
             >
                 <Form.Item
                     name="account"
