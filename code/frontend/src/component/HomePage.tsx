@@ -23,7 +23,7 @@ export const HomePage:React.FC<HomePageProps> =()=>{
         return (
             <div>
                 <Image src={index} width={"70%"} preview={false}/>
-                <h1>你的相册里还没有一张照片哦，快去上传吧</h1>
+                <h1>你的相册里还没有一张照片哦，快去上传吧!</h1>
             </div>
         )
     }

@@ -7,6 +7,9 @@ import { HomeView } from "./view/HomeView";
 import { HomePage } from "./component/HomePage";
 import { Album } from "./component/Album";
 import { getUserAuth } from "./server/UserAuth";
+import { Settings } from "./component/Settings";
+import { loadavg } from "os";
+import { Help } from "./component/Help";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -47,6 +50,18 @@ const router=[
                 path:"/album",
                 id:"album",
                 element:<Album/>,
+                loader:checkAuth,
+            },
+            {
+                path:"/settings",
+                id:"settings",
+                element:<Settings/>,
+                loader:checkAuth,
+            },
+            {
+                path:"/help",
+                id:"help",
+                element:<Help/>,
                 loader:checkAuth,
             }
         ]
