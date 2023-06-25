@@ -7,8 +7,19 @@
 import React from "react";
 import {Form, Input, Button} from 'antd'
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-interface LoginBosProps {
+import { setUserAuth } from "../server/UserAuth";
+interface LoginBoxProps {
 
+}
+
+export interface LoginProps{
+    account:string,
+    password:string
+}
+
+export interface RegisterProps{
+    account:string,
+    password:string,
 }
 
 const LoginBoxStyle:React.CSSProperties={
@@ -22,16 +33,21 @@ const LoginBoxStyle:React.CSSProperties={
     height:"300px"
 }
 
-export const LoginBox:React.FC<LoginBosProps> = () => {
+export const LoginBox:React.FC<LoginBoxProps> = () => {
 
     const [isLogin, setIsLogin] = React.useState(true)
 
-    const onFinishLogin=(values:any)=>{
+
+    
+    const onFinishLogin=(values:LoginProps)=>{
         console.log("login form values",values)
         //TODO:发送数据给后端请求用户信息
+        setUserAuth(true);
+        window.location.reload();
+        
     }
 
-    const onFinishRegister=(values:any)=>{
+    const onFinishRegister=(values:RegisterProps)=>{
         console.log("register form values",values)
         setIsLogin(true)
         //TODO:发送数据给后端

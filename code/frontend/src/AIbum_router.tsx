@@ -13,13 +13,23 @@ const checkAuth= async ()=>{
     if(!auth){
         return redirect("/login")
     }
+    else return null;
+}
+
+const checkLogin=async ()=>{
+    const auth = getUserAuth();
+    if(auth){
+        return redirect("/index")
+    }
+    else return null;
 }
 
 const router=[
     {
         path:"/login",
         id:"login",
-        element:<LoginView/>
+        element:<LoginView/>,
+        loader:checkLogin,
     },
     {
         path:"/",
