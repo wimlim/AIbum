@@ -1,4 +1,7 @@
-
+/**
+ * @file Settings.tsx
+ * @description 有关相册的设置(不是用户)
+ */
 interface SettingsProps {
 }
 

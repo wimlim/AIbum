@@ -3,11 +3,13 @@
  * @name Header.tsx
  * @description header: search,upload,settings,help,logout
  */
-import { QuestionOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Tooltip, Upload, message } from 'antd';
+import { LogoutOutlined, QuestionOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { Avatar, Button, Dropdown, Input, Space, Tooltip, Upload, message } from 'antd';
 import type {UploadProps} from 'antd'
+import type { MenuProps } from 'antd';
 import { Link } from 'react-router-dom';
-
+import ReactLogo from '../logo.svg';
+import { removeUserAuth } from '../server/UserAuth';
 const { Search } = Input;
 
 interface HeaderProps {
@@ -31,6 +33,23 @@ const HeaderUploadProps:UploadProps = {
     },
   };
 
+
+
+const uesrMenuItems:MenuProps['items'] = [
+  {
+    key: '1',
+    label: '个人中心',
+  },
+  {
+    key: '2',
+    label: (
+      <Button icon={<LogoutOutlined/>} type='text' size='small' onClick={()=>{removeUserAuth();window.location.reload();}}>
+        退出登录
+      </Button>
+    )
+  },
+]
+
 export const Header: React.FC<HeaderProps> = () => {
     return (
         <Space>
@@ -40,6 +59,7 @@ export const Header: React.FC<HeaderProps> = () => {
                 allowClear
                 style={{
                     marginTop: '10px',
+                    width: '700px',
                 }}
             />
             <Upload {...HeaderUploadProps}>
@@ -57,6 +77,9 @@ export const Header: React.FC<HeaderProps> = () => {
                     <Button shape='circle' size='large' icon={<QuestionOutlined/>}></Button>
                 </Link>
             </Tooltip>
+            <Dropdown menu={{items:uesrMenuItems}}>
+                <Avatar size='large' style={{display:'flex'}} src={ReactLogo}/>
+            </Dropdown>
         </Space>
     )
 }

@@ -12,3 +12,7 @@ export const getUserAuth = () => {
 export const setUserAuth = (auth:boolean) => {
     sessionStorage.setItem("userAuth",auth.toString())
 }
+
+export const removeUserAuth = () => {
+    sessionStorage.removeItem("userAuth")
+}
