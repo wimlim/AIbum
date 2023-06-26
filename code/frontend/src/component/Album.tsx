@@ -10,6 +10,7 @@ import { getFolders } from "../server/PictureServer";
 import emptyAlbum from "../assets/img/emptyAlbum.png"
 import { Button, Divider, Image,} from "antd";
 import { AlbumCard } from "./AlbumCard";
+import { Link } from "react-router-dom";
 
 interface AlbumProps {
 }
