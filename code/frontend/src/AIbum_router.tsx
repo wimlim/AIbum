@@ -8,8 +8,8 @@ import { HomePage } from "./component/HomePage";
 import { Album } from "./component/Album";
 import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
-import { loadavg } from "os";
 import { Help } from "./component/Help";
+import { Tool } from "./component/Tool";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -62,6 +62,12 @@ const router=[
                 path:"/help",
                 id:"help",
                 element:<Help/>,
+                loader:checkAuth,
+            },
+            {
+                path:"/tool",
+                id:"tool",
+                element:<Tool/>,
                 loader:checkAuth,
             }
         ]

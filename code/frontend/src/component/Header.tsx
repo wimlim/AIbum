@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = () => {
             />
             <Upload {...HeaderUploadProps}>
                 <Button icon={<UploadOutlined/>}  size ='large'>
-                    上传
+                    上传图片
                 </Button>
             </Upload>
             <Tooltip title='设置'>
