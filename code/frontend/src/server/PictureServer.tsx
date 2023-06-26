@@ -14,7 +14,7 @@ export const getPictures=(props:GetPicturesProps)=>{
 
 interface GetFoldersProps{
     param:{}|undefined,
-    callback:(data:FolderProps)=>void
+    callback:(data:FolderProps[])=>void
 }
 
 export const getFolders=(props:GetFoldersProps)=>{
