@@ -10,10 +10,10 @@ import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
 import { Help } from "./component/Help";
 import { Tool } from "./component/Tool";
-import { AlbumDetail } from "./component/AlbumDetail";
 import { FolderProps } from "./test/test_photo";
 import { get } from "http";
 import { getFolders } from "./server/PictureServer";
+import { AlbumDetailView } from "./view/AlbumDetailView";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -32,6 +32,11 @@ const checkLogin=async ()=>{
 }
 
 const albumDetailLoader:LoaderFunction=(props:LoaderFunctionArgs)=>{
+
+    //authority
+    const auth = getUserAuth();
+    if(!auth)return redirect("/login")
+
     const {params}=props;
     const {id}=params;
     let albums:FolderProps[]=[];
@@ -88,13 +93,14 @@ const router:RouteObject[]=[
                 id:"tool",
                 element:<Tool/>,
             },
-            {
-                path:"/album/:id",
-                id:"album",
-                element:<AlbumDetail/>,
-                loader:albumDetailLoader,
-            },
+            
         ]
+    },
+    {
+        path:"/album/:id",
+        id:"album",
+        element:<AlbumDetailView/>,
+        loader:albumDetailLoader,
     },
 
 ]
