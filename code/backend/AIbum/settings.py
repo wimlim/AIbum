@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 ]
 
 
-# 把csrf中间层注释掉是为了方便postman测试，正式发布时为了安全性记得加上
+# 把csrf中间层注释掉是为了方便测试，正式发布时为了安全性记得加上
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,8 +84,8 @@ DATABASES = {
         'NAME': 'aibum',
         'host': '127.0.0.1',
         'port': 3306,
-        'USER': 'root',
-        'PASSWORD': 'Cheng1076'
+        'USER': 'aibum',
+        'PASSWORD': 'Huawei314159265!'
     }
 }
 
