@@ -1,7 +1,7 @@
 /**
  * @fileoverview 项目路由配置
  * */
-import {createBrowserRouter, redirect} from "react-router-dom";
+import {LoaderFunction, LoaderFunctionArgs, RouteObject, createBrowserRouter, redirect} from "react-router-dom";
 import {LoginView} from "./view/LoginView"
 import { HomeView } from "./view/HomeView";
 import { HomePage } from "./component/HomePage";
@@ -10,6 +10,10 @@ import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
 import { Help } from "./component/Help";
 import { Tool } from "./component/Tool";
+import { AlbumDetail } from "./component/AlbumDetail";
+import { FolderProps } from "./test/test_photo";
+import { get } from "http";
+import { getFolders } from "./server/PictureServer";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -27,7 +31,26 @@ const checkLogin=async ()=>{
     else return null;
 }
 
-const router=[
+const albumDetailLoader:LoaderFunction=(props:LoaderFunctionArgs)=>{
+    const {params}=props;
+    const {id}=params;
+    let albums:FolderProps[]=[];
+    getFolders({
+        param:{},
+        callback:(data:FolderProps[])=>{
+            albums=data;
+        }
+    })
+    const album=albums[0]
+    return new Response(
+        JSON.stringify({album:album}),
+        {
+            headers:{"content-type":"application/json"},
+            status:200
+        });
+}
+
+const router:RouteObject[]=[
     {
         path:"/login",
         id:"login",
@@ -44,34 +67,36 @@ const router=[
                 path:"/index",
                 id:"homepage",
                 element:<HomePage/>,
-                loader:checkAuth
             },
             {
-                path:"/album",
-                id:"album",
+                path:"/albums",
+                id:"albums",
                 element:<Album/>,
-                loader:checkAuth,
             },
             {
                 path:"/settings",
                 id:"settings",
                 element:<Settings/>,
-                loader:checkAuth,
             },
             {
                 path:"/help",
                 id:"help",
                 element:<Help/>,
-                loader:checkAuth,
             },
             {
                 path:"/tool",
                 id:"tool",
                 element:<Tool/>,
-                loader:checkAuth,
-            }
+            },
+            {
+                path:"/album/:id",
+                id:"album",
+                element:<AlbumDetail/>,
+                loader:albumDetailLoader,
+            },
         ]
-    }
+    },
+
 ]
 
 export const AIbum_router =createBrowserRouter(router)

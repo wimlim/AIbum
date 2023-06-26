@@ -24,7 +24,7 @@ function getItem(
 
 const items: MenuItem[] = [
     getItem('首页', '1',<Link to={'/index'}><HomeOutlined/></Link>),
-    getItem('相册', '2',<Link to={'/album'}><PictureOutlined/></Link>),
+    getItem('相册', '2',<Link to={'/albums'}><PictureOutlined/></Link>),
     getItem('功能','3',<Link to={'/tool'}><ToolOutlined/></Link>)
 ];
 
