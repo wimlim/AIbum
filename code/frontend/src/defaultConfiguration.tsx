@@ -22,6 +22,11 @@ interface BackendAlbumProps{
     pictures:BackendPictureProps[];             //相册内图片
 }
 
+interface BackendUserProps{
+    account:string;                             //用户账号
+    password:string;                            //用户密码
+}
+
 export const defaultConfiguration:ConfigurationType = {
     backendUrl:'',
     registerPathName:'',
