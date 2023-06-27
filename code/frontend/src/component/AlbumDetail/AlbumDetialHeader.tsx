@@ -14,7 +14,8 @@ interface AlbumDetailHeaderProps {
 const AlbumDetailHeaderStyle:React.CSSProperties = {
     backgroundColor:"white",
     border:'1px solid #f0f0f0',
-    padding:'20px',
+    height:'64px',
+    padding:'10px'
 }
 
 const LeftStyle:React.CSSProperties = {
@@ -32,12 +33,13 @@ const dropDownMenuItems:MenuProps['items']=[
     }
 ]
 
-export const AlbumDetailHeader: React.FC<AlbumDetailHeaderProps> = () => {
+export const AlbumDetailHeader: React.FC<AlbumDetailHeaderProps> = (props) => {
+
     return (
         <div style={AlbumDetailHeaderStyle}>
             <Tooltip title='返回'>
                 <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large'/>
-                </Tooltip>
+            </Tooltip>
             <Dropdown menu={{items:dropDownMenuItems}}>
                 <Button icon={<MoreOutlined/>} style={RightStyle} shape='circle' size='large'/>
             </Dropdown>

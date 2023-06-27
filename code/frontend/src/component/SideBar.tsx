@@ -1,6 +1,7 @@
 import { HomeOutlined, PictureOutlined, ToolOutlined } from "@ant-design/icons";
 import { Menu } from "antd"
 import type { MenuProps } from 'antd';
+import React from "react";
 import { Link } from "react-router-dom";
 
 interface SideBarProps {
@@ -29,7 +30,14 @@ const items: MenuItem[] = [
 ];
 
 export const SideBar: React.FC<SideBarProps> = () => {
+
+
     return (
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items}/>
+        <Menu 
+          theme="dark" 
+          defaultSelectedKeys={['1']}
+          mode="inline" 
+          items={items}
+        />
     )
 }

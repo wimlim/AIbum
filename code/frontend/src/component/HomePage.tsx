@@ -87,7 +87,7 @@ export const HomePage:React.FC<HomePageProps> =()=>{
                                     {value[1].map((picture,index)=>{
                                         return(
                                             <div key={index} style={{margin:"10px"}}>
-                                                <Image src={picture.url} height={200} preview={{visible,onVisibleChange:(vis)=>setVisible(vis)}} onClick={()=>setSelectPictureIndex(index)}/>
+                                                <Image src={picture.url} height={200} preview={{visible:false,onVisibleChange:(vis)=>setVisible(vis)}} onClick={()=>setSelectPictureIndex(index)}/>
                                             </div>)})}
                                 </div>
                             </div>
