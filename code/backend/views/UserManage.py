@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 # django下的view整合了MVC中的V和C，
 # 因为View写在前端，这里可以简单理解为controller
 # 调用内置的login和logout函数，会自动写入清除缓存
+# 后续还可以结合redis优化缓存策略
 
 def user_login(request):
     if request.method == 'POST':
