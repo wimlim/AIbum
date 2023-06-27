@@ -12,7 +12,7 @@ import { Button, Divider, Image,} from "antd";
 import { AlbumCard } from "./AlbumCard";
 import { Link } from "react-router-dom";
 
-interface AlbumProps {
+interface AlbumComponentProps {
 }
 
 const emptyAlbumContentStyle:React.CSSProperties = {
@@ -23,7 +23,7 @@ const emptyAlbumContentStyle:React.CSSProperties = {
     flexDirection:"column"
 }
 
-export const Album:React.FC<AlbumProps> =()=>{
+export const Album:React.FC<AlbumComponentProps> =()=>{
     
     const [albums,setAlbums]=React.useState<AlbumProps[]>([]);
 
