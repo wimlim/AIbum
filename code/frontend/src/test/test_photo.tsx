@@ -18,7 +18,7 @@ export const get_test_album:()=>FolderProps[] =()=>{
     const pictures:PictureProps[]=get_test_homepage();
     return [{
         id:"1",
-        name:"1",
+        name:"我的第一个相册",
         time:"2023/06/16 05:26",
         pictures:pictures,
     }]
