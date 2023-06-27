@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import {RouterProvider} from "react-router-dom";
 import {AIbum_router} from "./AIbum_router";
+import "./index.css";
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <RouterProvider router={AIbum_router}/>
+      <RouterProvider router={AIbum_router}/>
   </React.StrictMode>
 );
 

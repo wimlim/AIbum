@@ -1,44 +1,103 @@
 /**
- * @fileoverview loginBox
+ * @fileoverview LoginBox
  * @brief 登录框
  *
  * */
 
 import React from "react";
-import {Form, Input, Button, Checkbox} from 'antd'
+import {Form, Input, Button, message} from 'antd'
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-interface LoginBosProps {
+import { getUserAuth, setUserAuth } from "../server/UserAuth";
+import { type } from "os";
+import { getUserInfo, registerUser } from "../server/UserServer";
+interface LoginBoxProps {
 
 }
 
-const LoginBoxStyle:React.CSSProperties={
-    position:"absolute",
-    top:"50%",
-    left:"50%",
-    transform:"translate(-50%,-50%)",
-    border:"1px solid black",
-    width:'300px',
-    padding:"20px",
-    height:"300px"
+export interface LoginProps{
+    account:string,
+    password:string
 }
 
-export const LoginBox:React.FC<LoginBosProps> = () => {
+export interface RegisterProps{
+    account:string,
+    password:string,
+}
+
+export const LoginBox:React.FC<LoginBoxProps> = () => {
 
     const [isLogin, setIsLogin] = React.useState(true)
 
-    const onFinish=(values:any)=>
+    const [messageApi,contextHolder]=message.useMessage();
+    
+    const loginError=()=>
     {
-        console.log('Recieved values of form: ', values)
+        messageApi.open({
+            type:'error',
+            content:'登录失败,请检查你的账号密码是否正确'
+        })
+    }
+
+    const onFinishLogin=(values:LoginProps)=>{
+        console.log("login form values",values)
+        //TODO:发送数据给后端请求用户信息
+        getUserInfo({formdata:values})
+        .then(response=>{
+            if(response.status===200)return response.json();
+            else if(response.status === 404)throw new Error("未连接到服务器")
+            else throw new Error("登录失败")
+        })
+        .then((data)=>{
+            messageApi.open({
+                type:'success',
+                content:'登录成功'
+            })
+            console.log("userInfo",data)
+            setUserAuth(true)
+            setIsLogin(false);
+        })
+        .catch((error)=>{
+            messageApi.open({
+                type:'error',
+                content:error.message
+            })
+        })
+    }
+
+    const onFinishRegister=(values:RegisterProps)=>{
+        console.log("register form values",values)
+        //TODO:发送数据给后端
+        registerUser(values)
+        .then(response=>{
+            if(response.status===200)return response.json();
+            else if(response.status === 404)throw new Error("未连接到服务器")
+            else throw new Error("注册失败")
+        })
+        .then(()=>{
+            messageApi.open({
+                type:'success',
+                content:'注册成功'
+            })
+            setIsLogin(true);
+        })
+        .catch((error)=>{
+            messageApi.open({
+                type:'error',
+                content:error.message
+            })
+        })
+
+
     }
 
     const loginButton=()=>
     {
-        return <Button type = 'primary' htmlType="submit" onClick={()=>setIsLogin(true)}>登录</Button>
+        return <Button type = 'primary' htmlType="submit">登录</Button>
     }
 
     const registerButton=()=>
     {
-        return <Button type = 'primary' htmlType='submit' onClick={()=>setIsLogin(false)}>注册</Button>
+        return <Button type = 'primary' htmlType='submit'>注册</Button>
     }
 
     const backButton=()=>
@@ -72,7 +131,7 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
         return (
             <Form
                 name="AIbum_login"
-                onFinish={onFinish}
+                onFinish={onFinishLogin}
             >
                 <Form.Item
                     name="account"
@@ -87,7 +146,9 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
                     <Input.Password prefix={<LockOutlined/>} placeholder="Password"/>
                 </Form.Item>
                 <div style={{float:'left'}}>{loginButton()}</div>
-                <div style={{float:'right'}}>{registerButton()}</div>
+                <div style={{float:'right'}}>
+                    <Button type = 'primary' onClick={()=>setIsLogin(false)}>注册</Button>
+                </div>
             </Form>
         )
     }
@@ -97,7 +158,7 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
         return (
             <Form
                 name="AIbum_register"
-                onFinish={onFinish}
+                onFinish={onFinishRegister}
             >
                 <Form.Item
                     name="account"
@@ -139,7 +200,8 @@ export const LoginBox:React.FC<LoginBosProps> = () => {
         )
     }
     return(
-        <div style={LoginBoxStyle}>
+        <div>
+            {contextHolder}
             {boxContent()}
         </div>
     )
