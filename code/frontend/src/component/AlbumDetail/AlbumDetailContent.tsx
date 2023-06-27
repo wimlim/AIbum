@@ -2,10 +2,10 @@
 import React from 'react';
 import {Image} from 'antd';
 import { Layout } from 'antd';
-import { FolderProps } from '../../test/test_photo';
+import { AlbumProps } from '../../test/test_photo';
 
 interface AlbumDetailContentProps {
-    album:FolderProps
+    album:AlbumProps
 }
 
 const AlbumDetailContentStyle:React.CSSProperties = {

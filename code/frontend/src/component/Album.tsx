@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from "react";
-import { FolderProps, get_test_album } from "../test/test_photo"
+import { AlbumProps, get_test_album } from "../test/test_photo"
 import { getFolders } from "../server/PictureServer";
 import emptyAlbum from "../assets/img/emptyAlbum.png"
 import { Button, Divider, Image,} from "antd";
@@ -25,13 +25,13 @@ const emptyAlbumContentStyle:React.CSSProperties = {
 
 export const Album:React.FC<AlbumProps> =()=>{
     
-    const [albums,setAlbums]=React.useState<FolderProps[]>([]);
+    const [albums,setAlbums]=React.useState<AlbumProps[]>([]);
 
     useEffect(()=>{
         getFolders(
             {
                 param:{},
-                callback:(data:FolderProps[])=>setAlbums(data)
+                callback:(data:AlbumProps[])=>setAlbums(data)
             }
         )
     },[])
@@ -59,7 +59,7 @@ export const Album:React.FC<AlbumProps> =()=>{
         return(
             <div>
                 {
-                    albums.map((album: FolderProps)=><AlbumCard album={album}/>)
+                    albums.map((album: AlbumProps)=><AlbumCard album={album}/>)
                 }
             </div>
         )

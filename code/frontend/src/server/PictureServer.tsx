@@ -1,5 +1,5 @@
 
-import {FolderProps, PictureProps, get_test_album, get_test_homepage} from "../test/test_photo";
+import {AlbumProps, PictureProps, get_test_album, get_test_homepage} from "../test/test_photo";
 
 interface GetPicturesProps{
     param:{}|undefined,
@@ -14,7 +14,7 @@ export const getPictures=(props:GetPicturesProps)=>{
 
 interface GetFoldersProps{
     param:{}|undefined,
-    callback:(data:FolderProps[])=>void
+    callback:(data:AlbumProps[])=>void
 }
 
 export const getFolders=(props:GetFoldersProps)=>{

@@ -6,15 +6,15 @@ export interface PictureProps{
     time:Date,                    //图片上传时间
 }
 
-export interface FolderProps
+export interface AlbumProps
 {
-    id:string,                      //文件夹id
-    name:string,                    //文件夹名字
-    time:string,                    //文件夹创建时间
-    pictures:PictureProps[],        //文件夹内的图片
+    id:string,                      //相册id
+    name:string,                    //相册名字
+    time:string,                    //相册创建时间
+    pictures:PictureProps[],        //相册内的图片
 }
 
-export const get_test_album:()=>FolderProps[] =()=>{
+export const get_test_album:()=>AlbumProps[] =()=>{
     const pictures:PictureProps[]=get_test_homepage();
     return [{
         id:"1",

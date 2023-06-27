@@ -1,9 +1,9 @@
 import { Card } from "antd";
-import { FolderProps } from "../test/test_photo";
+import { AlbumProps } from "../test/test_photo";
 import { Link, useNavigate } from "react-router-dom";
 
 interface AlbumCardProps{
-    album:FolderProps
+    album:AlbumProps
 }
 
 export const AlbumCard:React.FC<AlbumCardProps> =(props)=>{

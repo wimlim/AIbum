@@ -10,7 +10,7 @@ import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
 import { Help } from "./component/Help";
 import { Tool } from "./component/Tool";
-import { FolderProps } from "./test/test_photo";
+import { AlbumProps } from "./test/test_photo";
 import { get } from "http";
 import { getFolders } from "./server/PictureServer";
 import { AlbumDetailView } from "./view/AlbumDetailView";
@@ -39,10 +39,10 @@ const albumDetailLoader:LoaderFunction=(props:LoaderFunctionArgs)=>{
 
     const {params}=props;
     const {id}=params;
-    let albums:FolderProps[]=[];
+    let albums:AlbumProps[]=[];
     getFolders({
         param:{},
-        callback:(data:FolderProps[])=>{
+        callback:(data:AlbumProps[])=>{
             albums=data;
         }
     })
