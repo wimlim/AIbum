@@ -1,4 +1,7 @@
+import { Layout } from "antd";
 import { useLoaderData } from "react-router-dom"
+import { AlbumDetailHeader } from "../component/AlbumDetail/AlbumDetialHeader";
+import { AlbumDetailContent } from "../component/AlbumDetail/AlbumDetailContent";
 
 interface AlbumDetailViewProps {
 }
@@ -10,8 +13,9 @@ export const AlbumDetailView: React.FC<AlbumDetailViewProps> = () => {
     console.log(album)
 
     return (
-        <div>
-            1
-        </div>
+        <Layout>
+            <AlbumDetailHeader/>
+            <AlbumDetailContent/>
+        </Layout>
     )
 }
