@@ -1,5 +1,5 @@
 /**
- * @file loginView.tsx
+ * @file LoginView.tsx
  * @desc 登录页面
  * */
 import React from "react";

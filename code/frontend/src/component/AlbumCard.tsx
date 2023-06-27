@@ -1,9 +1,9 @@
 import { Card } from "antd";
-import { AlbumProps } from "../test/test_photo";
 import { Link, useNavigate } from "react-router-dom";
+import { BackendAlbumProps } from "../defaultConfiguration";
 
 interface AlbumCardProps{
-    album:AlbumProps
+    album:BackendAlbumProps
 }
 
 export const AlbumCard:React.FC<AlbumCardProps> =(props)=>{
@@ -16,7 +16,7 @@ export const AlbumCard:React.FC<AlbumCardProps> =(props)=>{
             hoverable
             onClick= {()=>{navigate(`/album/${album.id}`)}}
         >
-            <Card.Meta title={album.name} description={album.time}/>
+            <Card.Meta title={album.name} description={album.time.toDateString()}/>
         </Card>
     )
 }

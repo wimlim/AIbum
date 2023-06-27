@@ -5,12 +5,12 @@
  */
 
 import React, { useEffect } from "react";
-import { AlbumProps, get_test_album } from "../test/test_photo"
 import { getFolders } from "../server/PictureServer";
 import emptyAlbum from "../assets/img/emptyAlbum.png"
 import { Button, Divider, Image,} from "antd";
 import { AlbumCard } from "./AlbumCard";
 import { Link } from "react-router-dom";
+import { BackendAlbumProps } from "../defaultConfiguration";
 
 interface AlbumComponentProps {
 }
@@ -25,13 +25,13 @@ const emptyAlbumContentStyle:React.CSSProperties = {
 
 export const Album:React.FC<AlbumComponentProps> =()=>{
     
-    const [albums,setAlbums]=React.useState<AlbumProps[]>([]);
+    const [albums,setAlbums]=React.useState<BackendAlbumProps[]>([]);
 
     useEffect(()=>{
         getFolders(
             {
                 param:{},
-                callback:(data:AlbumProps[])=>setAlbums(data)
+                callback:(data:BackendAlbumProps[])=>setAlbums(data)
             }
         )
     },[])
@@ -59,7 +59,7 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
         return(
             <div>
                 {
-                    albums.map((album: AlbumProps)=><AlbumCard album={album}/>)
+                    albums.map((album: BackendAlbumProps)=><AlbumCard album={album}/>)
                 }
             </div>
         )

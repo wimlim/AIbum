@@ -6,9 +6,9 @@
 
 import { Image } from "antd"
 import index from "../assets/img/index.png"
-import {PictureProps } from "../test/test_photo";
 import React, { useEffect } from "react";
 import { getPictures } from "../server/PictureServer";
+import { BackendPictureProps } from "../defaultConfiguration";
 
 interface HomePageProps {
 }
@@ -34,14 +34,14 @@ const displayTime:(data:Date)=>string = (data:Date)=>
 
 export const HomePage:React.FC<HomePageProps> =()=>{
 
-    const [pictures,setPictures]=React.useState<PictureProps[]>([]);
+    const [pictures,setPictures]=React.useState<BackendPictureProps[]>([]);
     const [visible,setVisible]=React.useState<boolean>(false);
     const [selectPictureIndex,setSelectPictureIndex]=React.useState<number>(0);
     useEffect(()=>{
         getPictures(
             {
                 param:{},
-                callback:(data:PictureProps[])=>
+                callback:(data:BackendPictureProps[])=>
                 {
                     data.sort((a,b)=>b.time.getTime()-a.time.getTime())
                     setPictures(data)
@@ -62,7 +62,7 @@ export const HomePage:React.FC<HomePageProps> =()=>{
 
     const displayPictures=()=>
     {   
-        let DateMap:Map<string,PictureProps[]> =new Map();
+        let DateMap:Map<string,BackendPictureProps[]> =new Map();
         pictures.forEach((picture,index)=>{
             const time = displayTime(picture.time);
             if(DateMap.has(time))

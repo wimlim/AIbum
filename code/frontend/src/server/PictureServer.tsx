@@ -1,5 +1,14 @@
 
-import {AlbumProps, PictureProps, get_test_album, get_test_homepage} from "../test/test_photo";
+//import {AlbumProps, PictureProps, get_test_album, get_test_homepage} from "../test/test_photo";
+
+import {BackendAlbumProps, BackendPictureProps,defaultConfiguration} from "../defaultConfiguration";
+
+type PictureProps = BackendPictureProps;
+type AlbumProps = BackendAlbumProps;
+
+const configuration = defaultConfiguration;
+
+const {backendUrl,getPicturesPathName,getAlbumsPathName} = configuration;
 
 interface GetPicturesProps{
     param:{}|undefined,
@@ -9,15 +18,35 @@ interface GetPicturesProps{
 export const getPictures=(props:GetPicturesProps)=>{
     const{param,callback}=props;
 
-    callback(get_test_homepage());
+    const url = backendUrl+getPicturesPathName;
+    fetch(url)
+    .then((response)=>{
+        return response.json();
+    }
+    ).then((data)=>{
+        callback(data);
+    })
+    .catch((error)=>{
+        console.log(error);
+    })
 }
 
-interface GetFoldersProps{
+interface GetAlbumProps{
     param:{}|undefined,
     callback:(data:AlbumProps[])=>void
 }
 
-export const getFolders=(props:GetFoldersProps)=>{
+export const getFolders=(props:GetAlbumProps)=>{
     const {param,callback}=props;
-    callback(get_test_album());
+    const url = backendUrl+getAlbumsPathName;
+    fetch(url)
+    .then((response)=>{
+        return response.json();
+    }
+    ).then((data)=>{
+        callback(data);
+    })
+    .catch((error)=>{
+        console.log(error);
+    })
 }

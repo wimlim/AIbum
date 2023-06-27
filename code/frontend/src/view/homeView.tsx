@@ -1,6 +1,6 @@
 
 /**
- * @file homeView.tsx
+ * @file HomeView.tsx
  * @desc 主页面
  * @brief using ant design layout example, my componnet is Header, SideBar,and others in Outlet
  * @ref https://ant.design/components/layout-cn/
