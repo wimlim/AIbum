@@ -43,7 +43,6 @@ INSTALLED_APPS = [
 ]
 
 
-# 把csrf中间层注释掉是为了方便测试，正式发布时为了安全性记得加上
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -29,6 +29,4 @@ urlpatterns = [
     path('download/', views.PhotoManage.download),
     path('getPictures/', views.PhotoManage.getPictures),
     path('delete/', views.PhotoManage.delete),
-    # path('sortByTags/', views.PhotoManage.delete),
-    # path('sortByFace/', views.PhotoManage.delete),
 ]

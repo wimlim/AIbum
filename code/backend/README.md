@@ -6,5 +6,5 @@
 
 4. Configurations such as IP, port and infos about database are mentioned in "settings.py".
 
-5. You can check "127.0.0.1:8000/admin/" to manage data easily.
+5. You can check "127.0.0.1:8000/admin/" to manage datas that are registered easily.
 

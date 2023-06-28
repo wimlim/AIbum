@@ -3,6 +3,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.utils import timezone
 from models.models import Image
+import base64
 import os
 
 
@@ -11,9 +12,12 @@ def upload(request):
         file = request.FILES['file']
         file_name = file.name
         file_path = 'statics/img/' + file_name
+        userid = request.POST.get('userid')
+        if userid is None:
+            return HttpResponse('Please set user id!')
         path = default_storage.save(file_path, ContentFile(file.read()))
         img = Image.objects.create(path=path, name=file_name, upload_time=timezone.now(),
-                                   owner_id=request.user.id)
+                                   owner_id=userid)
         return HttpResponse('Upload successfully')
     else:
         return HttpResponse('Invalid request method')
@@ -31,11 +35,11 @@ def download(request):
                 response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
                 return response
             else:
-                return HttpResponse('File does not exist')
+                return HttpResponse('File does not exist!')
         else:
-            return HttpResponse('No such image')
+            return HttpResponse('No such image!')
     else:
-        return HttpResponse('Invalid request method')
+        return HttpResponse('Invalid request method!')
 
 
 def delete(request):
@@ -46,16 +50,17 @@ def delete(request):
             file_path = img.img_path
             default_storage.delete(file_path)
             img.delete()
-            return HttpResponse('Delete successfully')
+            return HttpResponse('Delete successfully!')
         else:
-            return HttpResponse('No such image')
+            return HttpResponse('No such image!')
     else:
-        return HttpResponse('Invalid request method')
+        return HttpResponse('Invalid request method!')
 
 
 def getPictures(request):
     if request.method == 'GET':
-        images = Image.objects.filter(owner_id=request.user.id)
+        userid = request.GET.get('userid')
+        images = Image.objects.filter(owner_id=userid)
         if images:
             images_data = []
             for img in images:
@@ -63,9 +68,12 @@ def getPictures(request):
                 if os.path.exists(path):
                     with open(path, 'rb') as f:
                         image_data = f.read()
+                    encoded_image = base64.b64encode(image_data).decode('utf-8')
                     images_data.append({
-                        'file_name': img.name,
-                        'image_data': image_data,
+                        'id': img.id,
+                        'name': img.name,
+                        'image_data': encoded_image,
+                        'date': img.upload_time,
                         'content_type': 'image/jpeg',
                     })
                 else:

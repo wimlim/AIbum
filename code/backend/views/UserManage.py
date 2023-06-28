@@ -3,20 +3,19 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.middleware.csrf import get_token
 import json
-import hashlib
 
 # django下的view整合了MVC中的V和C，
 # 因为View写在前端，这里可以简单理解为controller
 # 调用内置的login和logout函数，会自动写入清除缓存
-# 后续可以结合redis优化缓存策略
+
 
 def user_login(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('account')
         password = data.get('password')
-        print(password)
         if not username or not password:
             return JsonResponse({
                 'message': 'username or password empties!'
@@ -29,7 +28,7 @@ def user_login(request):
                 'message': 'login successful!',
                 'data': {
                     'username': user.username,
-                    'email': user.email,
+                    'userid': user.id,
                 }
             })
         else:
@@ -43,7 +42,7 @@ def user_login(request):
 
 
 def user_logout(request):
-    logout(request)  # 清除cookie
+    logout(request)
     return redirect("/login/")
 
 
