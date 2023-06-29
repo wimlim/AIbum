@@ -3,6 +3,8 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.utils import timezone
 from models.models import Image
+from models.models import User
+from models.models import Album
 import base64
 import os
 
@@ -83,3 +85,47 @@ def getPictures(request):
             return JsonResponse({'message': 'No such image!'}, status=404)
     else:
         return JsonResponse({'message': 'Invalid request method!'}, status=404)
+
+def createAlbum(request):
+    if request.method == 'POST':
+        userid = request.POST.get('userid')
+        album_name = request.POST.get('album_name')
+        if userid is None:
+            return HttpResponse('Please set user id!')
+        if album_name is None:
+            return HttpResponse('Please set album name!')
+        Album.objects.create(name=album_name, user=User.objects.get(id=userid))
+        return HttpResponse('Create album successfully')
+
+# add photo to album
+def addAlbumPhoto(request):
+    if request.method == 'POST':
+        userid = request.POST.get('userid')
+        album_name = request.POST.get('album_name')
+        photo_name = request.POST.get('photo_name')
+        if userid is None:
+            return HttpResponse('Please set user id!')
+        if album_name is None:
+            return HttpResponse('Please set album name!')
+        if photo_name is None:
+            return HttpResponse('Please set photo name!')
+        album = Album.objects.get(name=album_name, user=User.objects.get(id=userid))
+        photo = Image.objects.get(name=photo_name)
+        album.photos.add(photo)
+        return HttpResponse('Add photo successfully')
+
+def deleteAlbumPhoto(request):
+    if request.method == 'POST':
+        userid = request.POST.get('userid')
+        album_name = request.POST.get('album_name')
+        photo_name = request.POST.get('photo_name')
+        if userid is None:
+            return HttpResponse('Please set user id!')
+        if album_name is None:
+            return HttpResponse('Please set album name!')
+        if photo_name is None:
+            return HttpResponse('Please set photo name!')
+        album = Album.objects.get(name=album_name, user=User.objects.get(id=userid))
+        photo = Image.objects.get(name=photo_name)
+        album.photos.remove(photo)
+        return HttpResponse('Delete photo successfully')
