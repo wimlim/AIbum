@@ -24,7 +24,7 @@ export const createAlbum = (albumName:string)=>
 
 interface GetAlbumProps{
     param:{}|undefined,
-    callback:(data:AlbumProps[])=>void
+    callback:(data:BackendAlbumProps[])=>void
 }
 
 

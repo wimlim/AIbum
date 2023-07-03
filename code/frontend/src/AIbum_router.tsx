@@ -15,7 +15,7 @@ import { getPhotos } from "./server/PhotoServer";
 import { AlbumDetailView } from "./view/AlbumDetailView";
 import {homepageLoader} from "./component/HomePage"
 import { type } from "os";
-import { getAlbum, getAlbums } from "./server/AlbumServer";
+import { getAlbum} from "./server/AlbumServer";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();

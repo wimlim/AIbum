@@ -37,10 +37,19 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
 
     console.log("albums",albums);
     useEffect(()=>{
+        console.log("useEffect")
         getAlbums(
             {
                 param:{},
-                callback:(data:AlbumProps[])=>setAlbums(data)
+                callback:(data:BackendAlbumProps[])=>setAlbums(data.map(
+                    (album)=>{
+                        return {
+                            id:album.id,
+                            name:album.name,
+                            photos:album.photos.map((value:any)=>value.id as number)
+                        } as AlbumProps
+                    }
+                ))
             }
         )
     },[])

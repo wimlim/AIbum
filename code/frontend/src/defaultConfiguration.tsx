@@ -32,14 +32,14 @@ export interface PhotoProps{
 export interface BackendAlbumProps{
     id:number;                                  //相册id
     name:string;                                //相册名
-    //time:Date;                                  //相册创建时间
-    photos:PhotoProps[];                    //相册内图片
+    //time:Date;                                 //相册创建时间
+    photos:PhotoProps[];                            //相册内图片id
 }
 
 export interface AlbumProps{
     id:number;                                  //相册id
     name:string;                                //相册名
-    photos:PhotoProps[];                    //相册内图片
+    photos:number[];                            //相册内图片
 }
 
 export interface BackendUserAuthProps{

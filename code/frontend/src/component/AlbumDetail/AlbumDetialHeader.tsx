@@ -14,6 +14,7 @@ import { AlbumDeletePhoto } from './AlbumDeletePhoto'
 
 interface AlbumDetailHeaderProps {
     album:AlbumProps
+    setAlbum:Function
 }
 
 const AlbumDetailHeaderStyle:React.CSSProperties = {
@@ -71,8 +72,8 @@ export const AlbumDetailHeader: React.FC<AlbumDetailHeaderProps> = (props) => {
                 >
                     <Button icon={<MoreOutlined/>} style={RightStyle} shape='circle' size='large'/>
                 </Dropdown>
-                <AlbumDeletePhoto album={album} RightStyle={RightStyle}/>
-               <AlbumAddPicture RightStyle={RightStyle} album={album}/>
+                <AlbumDeletePhoto album={album} RightStyle={RightStyle} setAlbum={props.setAlbum}/>
+               <AlbumAddPicture RightStyle={RightStyle} album={album} setAlbum={props.setAlbum}/>
                 <Tooltip title='分享'>
                     <Button icon={<ShareAltOutlined/>} style={RightStyle} shape='circle' size='large'/>
                 </Tooltip>

@@ -9,10 +9,11 @@ import { albumAddPhotos } from "../../server/AlbumServer";
 interface AlbumAddPictureProps {
     RightStyle: React.CSSProperties
     album: AlbumProps
+    setAlbum:Function
 }
 
 export const AlbumAddPicture: React.FC<AlbumAddPictureProps> = (props) => {
-    const { RightStyle,album } = props;
+    const { RightStyle,album,setAlbum} = props;
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [selectedPhotoIds, setSelectedPhotoIds] = React.useState<number[]>([]);
     const [allPhotos, setAllPhotos] = React.useState<PhotoProps[]>([]);
@@ -48,11 +49,18 @@ export const AlbumAddPicture: React.FC<AlbumAddPictureProps> = (props) => {
 
         albumAddPhotos(album.id,selectedPhotoIds).then(
             (response)=>{
-                if(response.ok)message.success("添加成功");
+                if(response.ok)
+                {
+                    message.success("添加成功");
+                    setAlbum(
+                        {
+                            ...album,
+                            photos:[...album.photos,...selectedPhotoIds]
+                        }
+                    )
+                }
                 else message.error("添加失败");
             }
-        ).then(
-            ()=>setTimeout(()=>window.location.reload(),1000)
         )
         setIsModalOpen(false);
     };
@@ -65,7 +73,7 @@ export const AlbumAddPicture: React.FC<AlbumAddPictureProps> = (props) => {
 
     const options = allPhotos.filter(
         (photo)=>!album.photos.some(   // 过滤掉已经在相册中的图片
-            (albumPhoto)=>albumPhoto.id===photo.id
+            (albumPhoto)=>albumPhoto===photo.id
         )
     ).map(
         (photo)=>{

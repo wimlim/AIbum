@@ -10,12 +10,12 @@ import { setInterval } from "timers/promises";
 interface AlbumDeletePhotoProps {
     RightStyle: React.CSSProperties
     album: AlbumProps
+    setAlbum:Function
 }
 
 export const AlbumDeletePhoto: React.FC<AlbumDeletePhotoProps> = (props) => {
 
     const { RightStyle,album } = props;
-
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [selectedPhotoIds, setSelectedPhotoIds] = React.useState<number[]>([]);
     const [allPhotos, setAllPhotos] = React.useState<PhotoProps[]>([]);
@@ -48,12 +48,17 @@ export const AlbumDeletePhoto: React.FC<AlbumDeletePhotoProps> = (props) => {
 
         albumDeletePhotos(album.id,selectedPhotoIds).then(
             (response)=>{
-                if(response.ok)message.success("删除成功");
+                if(response.ok)
+                {
+                    message.success("删除成功");
+                    let tmp=[];
+                    for(let i=0;i<album.photos.length;i++)
+                    {
+                        if(!selectedPhotoIds.includes(album.photos[i]))tmp.push(album.photos[i]);
+                    }
+                    props.setAlbum({...album,photos:tmp});
+                }
                 else message.error("删除失败");
-            }
-        ).then(
-            ()=>{
-                setTimeout(()=>window.location.reload(),1000)
             }
         )
         setIsModalOpen(false);
@@ -65,7 +70,7 @@ export const AlbumDeletePhoto: React.FC<AlbumDeletePhotoProps> = (props) => {
 
     const options = allPhotos.filter(
         (photo)=>album.photos.some(
-            (albumPhoto)=>albumPhoto.id===photo.id
+            (albumPhoto)=>albumPhoto===photo.id
         )
     ).map(
         (photo)=>{

@@ -27,7 +27,7 @@ export const AlbumDetailContent: React.FC<AlbumDetailContentProps> = (props) => 
 
     const displayPhoto = allPhotos.filter((photo)=>{
         return album.photos.some((albumPhoto)=>{
-            return albumPhoto.id===photo.id;
+            return albumPhoto===photo.id;
         })
     })
 

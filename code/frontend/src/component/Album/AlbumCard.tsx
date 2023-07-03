@@ -33,13 +33,13 @@ export const AlbumCard:React.FC<AlbumCardProps> =(props)=>{
                     ))
                 }
             )
-        }
+        },[]
     )
 
     return(
         <Card
             style={{width:300}}
-            cover=<img alt={album.name} src={album.photos.length>0?`data:image/jpeg;base64,${allPhotos.find((value)=>value.id===album.photos[0].id)?.url}`:emptyPlaceholder} ></img>
+            cover=<img alt={album.name} src={album.photos.length>0?`data:image/jpeg;base64,${allPhotos.find((value)=>value.id===album.photos[0])?.url}`:emptyPlaceholder} ></img>
             hoverable
             onClick= {()=>{navigate(`/album/${album.id}`)}}
         >
