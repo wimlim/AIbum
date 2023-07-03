@@ -4,11 +4,16 @@
  */
 
 import React from 'react'
-import { Button, Dropdown, Layout, MenuProps, Tooltip } from 'antd'
-import { DeleteOutlined, FileAddOutlined, LeftOutlined, MoreOutlined, PictureFilled, ShareAltOutlined } from '@ant-design/icons'
-import { Tool } from '../Tool'
+import { Button, Dropdown, Layout, MenuProps, Tooltip, Upload, UploadProps } from 'antd'
+import { CloseCircleOutlined, DeleteOutlined, FileAddOutlined, LeftOutlined, MoreOutlined, PictureFilled, ShareAltOutlined } from '@ant-design/icons'
+import { AlbumProps } from '../../defaultConfiguration'
+import { deleteAlbum } from '../../server/AlbumServer'
+import { useNavigate } from 'react-router-dom'
+import { AlbumAddPicture } from './AlbumAddPhoto'
+import { AlbumDeletePhoto } from './AlbumDeletePhoto'
 
 interface AlbumDetailHeaderProps {
+    album:AlbumProps
 }
 
 const AlbumDetailHeaderStyle:React.CSSProperties = {
@@ -29,30 +34,54 @@ const RightStyle:React.CSSProperties = {
 const dropDownMenuItems:MenuProps['items']=[
     {
         key:'1',
-        label:'删除相册'
+        label:'删除相册',
+        icon:<DeleteOutlined/>,
     }
 ]
 
 export const AlbumDetailHeader: React.FC<AlbumDetailHeaderProps> = (props) => {
 
-    return (
-        <div style={AlbumDetailHeaderStyle}>
-            <Tooltip title='返回'>
-                <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large' href='/albums'/>
-            </Tooltip>
-            <Dropdown menu={{items:dropDownMenuItems}}>
-                <Button icon={<MoreOutlined/>} style={RightStyle} shape='circle' size='large'/>
-            </Dropdown>
-            <Tooltip title='移除图片'>
-                <Button icon={<DeleteOutlined/>} style={RightStyle} shape='circle' size='large'/>
-            </Tooltip>
-            <Tooltip title='添加图片'>
-                <Button icon={<FileAddOutlined/>} style={RightStyle} shape='circle' size='large'/>
-            </Tooltip>
-            <Tooltip title='分享'>
-                <Button icon={<ShareAltOutlined/>} style={RightStyle} shape='circle' size='large'/>
-            </Tooltip>
+    const navigate= useNavigate();
+    const {album}=props;
 
-        </div>
-    )
+
+    console.log(album)
+
+    const onClick:MenuProps['onClick']=({key})=>
+    {
+        if(key==='1')
+        {
+            deleteAlbum(album.id.toString()).then((res)=>{
+                return res.json();
+            }).then((data)=>{console.log(data)})
+            .catch((err)=>{console.log(err)})
+            navigate('/albums');
+        }
+    }
+
+    const content=()=>
+    {
+        return (
+            <div style={AlbumDetailHeaderStyle}>
+                <Tooltip title='返回'>
+                    <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large' href='/albums'/>
+                </Tooltip>
+                <Dropdown 
+                    menu={{items:dropDownMenuItems,onClick:onClick}}
+                >
+                    <Button icon={<MoreOutlined/>} style={RightStyle} shape='circle' size='large'/>
+                </Dropdown>
+                <AlbumDeletePhoto album={album} RightStyle={RightStyle}/>
+               <AlbumAddPicture RightStyle={RightStyle} album={album}/>
+                <Tooltip title='分享'>
+                    <Button icon={<ShareAltOutlined/>} style={RightStyle} shape='circle' size='large'/>
+                </Tooltip>
+    
+            </div>
+        )
+    }
+
+    return content();
+
+    
 }

@@ -10,6 +10,7 @@ import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import { getUserAuth, setUserAuth } from "../server/UserAuth";
 import { type } from "os";
 import { getUserInfo, registerUser } from "../server/UserServer";
+import { BackendUserInfoProps } from "../defaultConfiguration";
 interface LoginBoxProps {
 
 }
@@ -29,20 +30,12 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
     const [isLogin, setIsLogin] = React.useState(true)
 
     const [messageApi,contextHolder]=message.useMessage();
-    
-    const loginError=()=>
-    {
-        messageApi.open({
-            type:'error',
-            content:'登录失败,请检查你的账号密码是否正确'
-        })
-    }
 
     const onFinishLogin=(values:LoginProps)=>{
         console.log("login form values",values)
         //TODO:发送数据给后端请求用户信息
         getUserInfo({formdata:values})
-        .then(response=>{
+        .then((response)=>{
             if(response.status===200)return response.json();
             else if(response.status === 404)throw new Error("未连接到服务器")
             else throw new Error("登录失败")
@@ -52,9 +45,12 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
                 type:'success',
                 content:'登录成功'
             })
-            console.log("userInfo",data)
+            console.log(typeof(data))
+            const {username,userid}=data.data;
+            sessionStorage.setItem("username",username)
+            sessionStorage.setItem("userid",userid.toString())
             setUserAuth(true)
-            setIsLogin(false);
+            window.location.reload();
         })
         .catch((error)=>{
             messageApi.open({
@@ -81,6 +77,7 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
             setIsLogin(true);
         })
         .catch((error)=>{
+            console.log(error)
             messageApi.open({
                 type:'error',
                 content:error.message

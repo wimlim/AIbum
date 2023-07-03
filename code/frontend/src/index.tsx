@@ -4,6 +4,9 @@ import reportWebVitals from './reportWebVitals';
 import {RouterProvider} from "react-router-dom";
 import {AIbum_router} from "./AIbum_router";
 import "./index.css";
+import {store} from "./store";
+import {Provider} from "react-redux";
+import exp from 'constants';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +14,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
       <RouterProvider router={AIbum_router}/>
+    </Provider>
   </React.StrictMode>
 );
 

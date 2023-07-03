@@ -5,15 +5,17 @@ import {LoaderFunction, LoaderFunctionArgs, RouteObject, createBrowserRouter, re
 import {LoginView} from "./view/LoginView"
 import { HomeView } from "./view/HomeView";
 import { HomePage } from "./component/HomePage";
-import { Album } from "./component/Album";
+import { Album } from "./component/Album/Album";
 import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
 import { Help } from "./component/Help";
 import { Tool } from "./component/Tool";
-import { BackendAlbumProps } from "./defaultConfiguration";
-import { get } from "http";
-import { getFolders } from "./server/PictureServer";
+import { AlbumProps, BackendAlbumProps, BackendPictureProps, PhotoProps } from "./defaultConfiguration";
+import { getPhotos } from "./server/PhotoServer";
 import { AlbumDetailView } from "./view/AlbumDetailView";
+import {homepageLoader} from "./component/HomePage"
+import { type } from "os";
+import { getAlbum, getAlbums } from "./server/AlbumServer";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -31,7 +33,7 @@ const checkLogin=async ()=>{
     else return null;
 }
 
-const albumDetailLoader:LoaderFunction=(props:LoaderFunctionArgs)=>{
+const albumDetailLoader:LoaderFunction=async (props:LoaderFunctionArgs)=>{
 
     //authority
     const auth = getUserAuth();
@@ -39,21 +41,16 @@ const albumDetailLoader:LoaderFunction=(props:LoaderFunctionArgs)=>{
 
     const {params}=props;
     const {id}=params;
-    let albums:BackendAlbumProps[]=[];
-    getFolders({
-        param:{},
-        callback:(data:BackendAlbumProps[])=>{
-            albums=data;
-        }
-    })
-    const album=albums[0]
-    return new Response(
-        JSON.stringify({album:album}),
-        {
-            headers:{"content-type":"application/json"},
-            status:200
-        });
+    let album:AlbumProps|null=null;
+    if(id===undefined)return redirect("/album")
+    await getAlbum(id).then((res)=>{console.log(res);return res.json();})
+    .then((data)=>{console.log(data);album = {id:parseInt(id),name:data.name,photos:data.photos} as AlbumProps;})
+    .catch((err)=>{console.log(err)})
+    console.log(album)
+    return new Response(JSON.stringify(album),{status:200})
 }
+
+
 
 const router:RouteObject[]=[
     {
@@ -72,6 +69,7 @@ const router:RouteObject[]=[
                 path:"/index",
                 id:"homepage",
                 element:<HomePage/>,
+                loader:homepageLoader,
             },
             {
                 path:"/albums",

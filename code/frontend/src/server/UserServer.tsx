@@ -21,7 +21,7 @@ export const getUserInfo:(props: GetUserInfoProps) => Promise<Response> = (props
 
     const formData:BackendUserAuthProps={
         account:props.formdata.account,
-        password:md5(props.formdata.password)
+        password:props.formdata.password
     };
 
     return fetch(url, {
@@ -41,7 +41,7 @@ export const registerUser:(props:RegisterProps)=>Promise<Response> = (props: Reg
 
     const formData:BackendUserAuthProps={
         account:account,
-        password:md5(password)
+        password:password,
     }
 
     return fetch(url, {
