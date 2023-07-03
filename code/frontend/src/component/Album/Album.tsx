@@ -126,6 +126,8 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
                 <div>
                     <h1 style={{float:"left"}}>相册</h1>
                     <Button type="primary" onClick={showModal} style={{float:'right'}}>创建相册</Button>
+                    <Button type="primary" style={{float:'right',marginRight:'10px'}}>图像分类</Button>
+                    <Button type="primary" style={{float:'right',marginRight:'10px'}}>人脸聚类</Button>
                 </div>
                 <Divider/>
             </div>
