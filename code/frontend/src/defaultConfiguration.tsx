@@ -1,3 +1,5 @@
+import { get } from "http";
+
 export interface defaultConfigurationType
 {
     backendUrl:string;                          //后端网址
@@ -12,6 +14,8 @@ export interface defaultConfigurationType
     deletePhotoPathName:string;               //删除图片路径
     albumAddPhotoPathName:string;             //相册添加图片路径
     albumDeletePhotoPathName:string;          //相册删除图片路径
+    getTagsAlbumPathName:string;                //获取标签相册路径
+    getFacesAlbumPathName:string;               //获取人脸相册路径
 }   
 
 export interface BackendPictureProps{
@@ -64,5 +68,7 @@ export const defaultConfiguration:defaultConfigurationType = {
     deleteAlbumPathName:'album/delete',
     albumAddPhotoPathName:'album/add',
     deletePhotoPathName:'delete/',
-    albumDeletePhotoPathName:'album/delete/picture'
+    albumDeletePhotoPathName:'album/delete/picture',
+    getTagsAlbumPathName:'album/getTags',
+    getFacesAlbumPathName:'album/getFaces'
 }

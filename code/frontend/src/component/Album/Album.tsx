@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from "react";
-import { getAlbums } from "../../server/AlbumServer";
+import { getAlbums, getTagsAlbum } from "../../server/AlbumServer";
 import emptyAlbum from "../../assets/img/emptyAlbum.png"
 import { Button, Divider, Form, Image, Modal, Space, message,} from "antd";
 import { AlbumCard } from "./AlbumCard";
@@ -119,6 +119,39 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
         )
     }
 
+    const clickTagsAlbum=()=>
+    {
+        console.log("click tags album");
+        getTagsAlbum().then(
+            (response)=>{
+                if(response.ok)
+                {
+                    console.log(response);
+                    setTimeout(()=>window.location.reload(),1000)
+
+                }
+                return response.json();
+            }
+        )
+    }
+
+    const clickFaceAlbum=()=>
+    {
+        console.log("click face album");
+        getTagsAlbum().then(
+            (response)=>{
+                if(response.ok)
+                {
+                    console.log(response);
+                    setTimeout(()=>window.location.reload(),1000)
+
+                }
+                return response.json();
+            }
+        )
+    }
+
+
     const albumHeader=()=>
     {
         return(
@@ -126,8 +159,8 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
                 <div>
                     <h1 style={{float:"left"}}>相册</h1>
                     <Button type="primary" onClick={showModal} style={{float:'right'}}>创建相册</Button>
-                    <Button type="primary" style={{float:'right',marginRight:'10px'}}>图像分类</Button>
-                    <Button type="primary" style={{float:'right',marginRight:'10px'}}>人脸聚类</Button>
+                    <Button type="primary" style={{float:'right',marginRight:'10px'}} onClick={clickTagsAlbum}>图像分类</Button>
+                    <Button type="primary" style={{float:'right',marginRight:'10px'}} onClick={clickFaceAlbum}>人脸聚类</Button>
                 </div>
                 <Divider/>
             </div>
