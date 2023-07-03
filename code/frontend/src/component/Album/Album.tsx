@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from "react";
-import { getAlbums, getTagsAlbum } from "../../server/AlbumServer";
+import { getAlbums, getFacesAlbum, getTagsAlbum } from "../../server/AlbumServer";
 import emptyAlbum from "../../assets/img/emptyAlbum.png"
 import { Button, Divider, Form, Image, Modal, Space, message,} from "antd";
 import { AlbumCard } from "./AlbumCard";
@@ -111,7 +111,7 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
     const albumContent=()=>
     {
         return(
-            <Space>
+            <Space wrap={true}>
                 {
                     albums.map((album: AlbumProps,index)=><AlbumCard album={album} key={index}/>)
                 }
@@ -138,7 +138,7 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
     const clickFaceAlbum=()=>
     {
         console.log("click face album");
-        getTagsAlbum().then(
+        getFacesAlbum().then(
             (response)=>{
                 if(response.ok)
                 {
