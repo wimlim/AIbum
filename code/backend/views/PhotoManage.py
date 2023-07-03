@@ -1,8 +1,9 @@
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.utils import timezone
-from models.models import Image
+from pg_model.models import Image
+import base64
 import os
 
 
@@ -11,9 +12,12 @@ def upload(request):
         file = request.FILES['file']
         file_name = file.name
         file_path = 'statics/img/' + file_name
+        userid = request.POST.get('userid')
+        if userid is None:
+            return HttpResponse('Please set user id!')
         path = default_storage.save(file_path, ContentFile(file.read()))
         img = Image.objects.create(path=path, name=file_name, upload_time=timezone.now(),
-                                   owner_id=request.user.id)
+                                   owner_id=userid)
         return HttpResponse('Upload successfully')
     else:
         return HttpResponse('Invalid request method')
@@ -31,11 +35,11 @@ def download(request):
                 response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
                 return response
             else:
-                return HttpResponse('File does not exist')
+                return HttpResponse('File does not exist!')
         else:
-            return HttpResponse('No such image')
+            return HttpResponse('No such image!')
     else:
-        return HttpResponse('Invalid request method')
+        return HttpResponse('Invalid request method!')
 
 
 def delete(request):
@@ -46,39 +50,81 @@ def delete(request):
             file_path = img.img_path
             default_storage.delete(file_path)
             img.delete()
-            return HttpResponse('Delete successfully')
+            return HttpResponse('Delete successfully!')
         else:
-            return HttpResponse('No such image')
+            return HttpResponse('No such image!')
     else:
-        return HttpResponse('Invalid request method')
+        return HttpResponse('Invalid request method!')
 
-# let fileField = document.createElement("input");
-# fileField.type = "file";
-# fileField.id = "fileField";
-# document.body.appendChild(fileField);
-# let formData = new FormData();
-# let fileField = document.querySelector("#fileField");
-#
-# formData.append('file', fileField.files[0]);
-# fetch('/upload/', {
-#   method: 'POST',
-#   body: formData
-# })
-# .then(response => response.json())
-# .catch(error => console.error('Error:', error))
-# .then(response => console.log('Success:', response));
 
-# fetch('/download?file_name=your_file_name', {
-#   method: 'GET',
-#   headers: {
-#     'Content-Type': 'application/json',
-#     'Accept': 'application/json'
-#   }
-# })
-# .then(response => response.blob())
-# .then(blob => {
-#   const url = window.URL.createObjectURL(blob);
-#   const img = document.createElement('img');
-#   img.src = url;
-#   document.body.appendChild(img);
-# });
+def getPictures(request):
+    if request.method == 'GET':
+        userid = request.GET.get('userid')
+        images = Image.objects.filter(owner_id=userid)
+        if images:
+            images_data = []
+            for img in images:
+                path = img.path
+                if os.path.exists(path):
+                    with open(path, 'rb') as f:
+                        image_data = f.read()
+                    encoded_image = base64.b64encode(image_data).decode('utf-8')
+                    images_data.append({
+                        'id': img.id,
+                        'name': img.name,
+                        'image_data': encoded_image,  # base64jiami
+                        'date': img.upload_time,
+                        'content_type': 'image/jpeg',
+                    })
+                else:
+                    return JsonResponse({'message': 'File does not exist!'}, status=404)
+            return JsonResponse(images_data, safe=False)
+        else:
+            return JsonResponse({'message': 'No such image!'}, status=404)
+    else:
+        return JsonResponse({'message': 'Invalid request method!'}, status=404)
+
+
+def createAlbum(request):
+    if request.method == 'POST':
+        userid = request.POST.get('userid')
+        album_name = request.POST.get('album_name')
+        if userid is None:
+            return HttpResponse('Please set user id!')
+        if album_name is None:
+            return HttpResponse('Please set album name!')
+        Album.objects.create(name=album_name, user=User.objects.get(id=userid))
+        return HttpResponse('Create album successfully')
+ 
+# add photo to album
+def addAlbumPhoto(request):
+    if request.method == 'POST':
+        userid = request.POST.get('userid')
+        album_name = request.POST.get('album_name')
+        photo_name = request.POST.get('photo_name')
+        if userid is None:
+            return HttpResponse('Please set user id!')
+        if album_name is None:
+            return HttpResponse('Please set album name!')
+        if photo_name is None:
+            return HttpResponse('Please set photo name!')
+        album = Album.objects.get(name=album_name, user=User.objects.get(id=userid))
+        photo = Image.objects.get(name=photo_name)
+        album.photos.add(photo)
+        return HttpResponse('Add photo successfully')
+ 
+def deleteAlbumPhoto(request):
+    if request.method == 'POST':
+        userid = request.POST.get('userid')
+        album_name = request.POST.get('album_name')
+        photo_name = request.POST.get('photo_name')
+        if userid is None:
+            return HttpResponse('Please set user id!')
+        if album_name is None:
+            return HttpResponse('Please set album name!')
+        if photo_name is None:
+            return HttpResponse('Please set photo name!')
+        album = Album.objects.get(name=album_name, user=User.objects.get(id=userid))
+        photo = Image.objects.get(name=photo_name)
+        album.photos.remove(photo)
+        return HttpResponse('Delete photo successfully')

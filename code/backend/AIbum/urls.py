@@ -10,7 +10,7 @@ Function views
 Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLConf
+Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
@@ -27,7 +27,6 @@ urlpatterns = [
     path('register/', views.UserManage.user_register),
     path('upload/', views.PhotoManage.upload),
     path('download/', views.PhotoManage.download),
+    path('getPictures/', views.PhotoManage.getPictures),
     path('delete/', views.PhotoManage.delete),
-    path('sortByTags/', views.PhotoManage.delete),
-    path('sortByFace/', views.PhotoManage.delete),
 ]

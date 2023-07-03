@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@-y76j1f7&clt62x@_ipvx$l0sv@2b-=$2k1hth)igyefd35a*'
+SECRET_KEY = 'django-insecure-9p@ep)a83o9-v+)se2k7*n6fx%$n=vd%ji*r&dl2^s0&((rr+$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,11 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'models',
+    'pg_model',
 ]
 
-
-# 把csrf中间层注释掉是为了方便测试，正式发布时为了安全性记得加上
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewares.RequestFilter.MWare'
 ]
 
 ROOT_URLCONF = 'AIbum.urls'
@@ -59,7 +55,7 @@ ROOT_URLCONF = 'AIbum.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,12 +76,12 @@ WSGI_APPLICATION = 'AIbum.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'aibum',
         'host': '127.0.0.1',
-        'port': 3306,
-        'USER': 'aibum',
-        'PASSWORD': 'Huawei314159265!'
+        'port': 5432,
+        'USER': 'postgres',  # aibum
+        'PASSWORD': 'postgres',  # Huawei314159265!
     }
 }
 
@@ -124,7 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'statics/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
