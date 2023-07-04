@@ -13,6 +13,7 @@ import { Tool } from "./component/Tool";
 import { AlbumProps } from "./defaultConfiguration";
 import { AlbumDetailView } from "./view/AlbumDetailView";
 import { getAlbum} from "./server/AlbumServer";
+import { UserProfile } from "./component/UserProfile";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -86,6 +87,11 @@ export const router:RouteObject[]=[
                 path:"/tool",
                 id:"tool",
                 element:<Tool/>,
+            },
+            {
+                path:'/profile',
+                id:"profile",
+                element:<UserProfile/>,
             },
             
         ]
