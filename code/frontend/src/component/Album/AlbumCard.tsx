@@ -1,9 +1,10 @@
-import { Card } from "antd";
+import { Card, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AlbumProps, BackendPictureProps, PhotoProps } from "../../defaultConfiguration";
 import emptyPlaceholder from "../../assets/img/empyPlaceholder.png"
 import React, { useEffect } from "react";
 import { getPhotos } from "../../server/PhotoServer";
+import { error } from "console";
 
 interface AlbumCardProps{
     album:AlbumProps
@@ -18,7 +19,12 @@ export const AlbumCard:React.FC<AlbumCardProps> =(props)=>{
         ()=>
         {
             getPhotos({}).then(
-                (response)=>response.json()
+                (response)=>
+                {
+                    console.log(response)
+                    if(!response.ok&&response.statusText==='Not Found')throw new Error("没有图片")
+                    return response.json()
+                }
             ).then(
                 (data)=>{
                     setAllPhotos(data.map(
@@ -33,6 +39,7 @@ export const AlbumCard:React.FC<AlbumCardProps> =(props)=>{
                     ))
                 }
             )
+            .catch((error)=>message.error(error.message))
         },[]
     )
 

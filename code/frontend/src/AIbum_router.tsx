@@ -52,7 +52,7 @@ const albumDetailLoader:LoaderFunction=async (props:LoaderFunctionArgs)=>{
 
 
 
-const router:RouteObject[]=[
+export const router:RouteObject[]=[
     {
         path:"/login",
         id:"login",
