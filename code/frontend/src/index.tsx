@@ -26,6 +26,11 @@ const App:React.FC = ()=>{
           (response)=>{
               console.log(response)   
               message.info("正在获取图片信息");
+              if(response.status!==200)
+              {
+                  message.error("获取图片信息失败或者你的空间里没有照片");
+                  throw new Error("获取图片信息失败或者你的空间里没有照片");
+              }
               return response.json();
           }
       ).then(
@@ -46,8 +51,8 @@ const App:React.FC = ()=>{
       ).catch(
           (error)=>{
               console.log(error);
+              //message.error(error)
           })
-          dispatch({type:"set",payload:pictures});
     },[]
   )
   const store:GlobalShareContextProps = {
