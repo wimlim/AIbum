@@ -8,7 +8,6 @@ import { Button, Image } from "antd"
 import index from "../assets/img/index.png"
 import React from "react";
 import { PhotoProps } from "../defaultConfiguration";
-import { setPictures } from "../picturesSlice";
 import { DeletePicturesModal } from "./DeletePhotosModal";
 import { GlobalShareContext } from "../utils/GlobalShareReducer";
 
@@ -41,7 +40,7 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
     const [selectPictureIndex,setSelectPictureIndex]=React.useState<number>(0);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
-    const {state} = React.useContext(GlobalShareContext);
+    const {state,dispatch} = React.useContext(GlobalShareContext);
    // dispatch({type:"set",payload:pictures})
     console.log("state now is :",state)
 
@@ -117,7 +116,7 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
                         {state.photo.map((picture,index)=>{return <Image placeholder key={index} src={`data:image/jpeg;base64,${picture.url}`}/>})}
                     </Image.PreviewGroup>
                 </div>
-                <DeletePicturesModal onOk={handleOk} onCancel={handleCancel} pictures={state.photo} setPictures={setPictures} open={isModalOpen}/>
+                <DeletePicturesModal onOk={handleOk} onCancel={handleCancel} pictures={state.photo} setPictures={(value:PhotoProps[])=>{dispatch({type:'set',payload:value})}} open={isModalOpen}/>
             </div>
         )
     }
