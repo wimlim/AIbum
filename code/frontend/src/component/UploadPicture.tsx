@@ -57,7 +57,7 @@ const addFacesAndTags = async (file:File)=>{
 const props: UploadProps = {
     name: 'file',
     accept:'.jpg,.png,.jpeg',
-    beforeUpload: async (file:any) => {
+    beforeUpload: async (file:any,filesList) => {
         //console.log("file",file)
         let myHeaders = new Headers();
         myHeaders.append("Cookie",document.cookie);
@@ -65,6 +65,7 @@ const props: UploadProps = {
         formdata.append("file", file);
         formdata.append("userid",sessionStorage.getItem("userid")||"");
 
+        console.log(file,filesList)
 
         addFacesAndTags(file).then(
             (data:any)=>
@@ -99,7 +100,8 @@ const props: UploadProps = {
         
         return false;
     },
-    showUploadList:false
+    showUploadList:false,
+    multiple:true
   };
 
 export const UploadPicture: React.FC<UploadPictureProps> = () => {
