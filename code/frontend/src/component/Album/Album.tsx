@@ -9,7 +9,6 @@ import { getAlbums, getFacesAlbum, getTagsAlbum } from "../../server/AlbumServer
 import emptyAlbum from "../../assets/img/emptyAlbum.png"
 import { Button, Divider, Form, Image, Modal, Space, message,} from "antd";
 import { AlbumCard } from "./AlbumCard";
-import { Link } from "react-router-dom";
 import { BackendAlbumProps,AlbumProps } from "../../defaultConfiguration";
 import { createAlbum } from "../../server/AlbumServer";
 import Input from "antd/lib/input";

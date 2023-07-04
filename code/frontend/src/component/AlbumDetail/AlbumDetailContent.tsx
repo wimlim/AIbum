@@ -1,9 +1,8 @@
 
-import React, { useEffect } from 'react';
-import {Checkbox, Image} from 'antd';
+import React from 'react';
+import {Image} from 'antd';
 import { Layout } from 'antd';
-import { AlbumProps, BackendPictureProps, PhotoProps } from '../../defaultConfiguration';
-import { getPhotos } from '../../server/PhotoServer';
+import { AlbumProps} from '../../defaultConfiguration';
 import { GlobalShareContext } from '../../utils/GlobalShareReducer';
 
 interface AlbumDetailContentProps {

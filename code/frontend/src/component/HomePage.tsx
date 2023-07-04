@@ -4,18 +4,15 @@
  * @brief homepage按照上传时间展示所有图片
  */
 
-import { Button, Image, Modal } from "antd"
+import { Button, Image } from "antd"
 import index from "../assets/img/index.png"
 import React, { useEffect } from "react";
 import { BackendPictureProps, PhotoProps } from "../defaultConfiguration";
 import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { type } from "os";
 import { getPhotos } from "../server/PhotoServer";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { addPicture, setPictures } from "../picturesSlice";
+import { setPictures } from "../picturesSlice";
 import { DeletePicturesModal } from "./DeletePhotosModal";
 import { GlobalShareContext } from "../utils/GlobalShareReducer";
-import { stat } from "fs";
 
 interface HomePageProps {
 }

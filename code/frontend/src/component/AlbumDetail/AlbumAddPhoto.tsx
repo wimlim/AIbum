@@ -1,9 +1,8 @@
 import { FileAddOutlined } from "@ant-design/icons"
 import { Button, Checkbox, Image, Modal, Tooltip, message } from "antd"
-import React, { useEffect } from "react";
-import { AlbumProps, BackendPictureProps, PhotoProps } from "../../defaultConfiguration";
+import React from "react";
+import { AlbumProps} from "../../defaultConfiguration";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
-import { getPhotos } from "../../server/PhotoServer";
 import { albumAddPhotos } from "../../server/AlbumServer";
 import { GlobalShareContext } from "../../utils/GlobalShareReducer";
 

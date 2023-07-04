@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
-import { AlbumProps, BackendPictureProps, PhotoProps } from "../../defaultConfiguration";
-import { getPhotos } from "../../server/PhotoServer";
+import React from "react";
+import { AlbumProps,} from "../../defaultConfiguration";
 import { albumDeletePhotos } from "../../server/AlbumServer";
 import { Button, Modal, Tooltip, message,Checkbox,Image } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
-import { setInterval } from "timers/promises";
 import { GlobalShareContext } from "../../utils/GlobalShareReducer";
 
 interface AlbumDeletePhotoProps {

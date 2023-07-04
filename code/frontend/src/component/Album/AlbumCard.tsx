@@ -1,10 +1,8 @@
-import { Card, message } from "antd";
+import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
-import { AlbumProps, BackendPictureProps, PhotoProps } from "../../defaultConfiguration";
+import { AlbumProps} from "../../defaultConfiguration";
 import emptyPlaceholder from "../../assets/img/empyPlaceholder.png"
-import React, { useEffect } from "react";
-import { getPhotos } from "../../server/PhotoServer";
-import { error } from "console";
+import React from "react";
 import { GlobalShareContext } from "../../utils/GlobalShareReducer";
 
 interface AlbumCardProps{
