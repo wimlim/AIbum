@@ -14,6 +14,8 @@ import { getPhotos } from "../server/PhotoServer";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { addPicture, setPictures } from "../picturesSlice";
 import { DeletePicturesModal } from "./DeletePhotosModal";
+import { GlobalShareContext } from "../utils/GlobalShareReducer";
+import { stat } from "fs";
 
 interface HomePageProps {
 }
@@ -79,22 +81,28 @@ const displayTime:(data:Date)=>string = (data:Date)=>
 
 export const HomePage:React.FC<HomePageProps> =(props)=>{
 
-    const loaderData = useLoaderData() as string;
-    const [pictures,setPictures]=React.useState<PhotoProps[]>(
-        JSON.parse(loaderData).pictures.map(
-            (picture:PhotoProps)=>{
-                return {
-                    id:picture.id,
-                    name:picture.name,
-                    url:picture.url,
-                    time:new Date(picture.time),
-                } as PhotoProps
-            }
-        )
-    );
+    const loaderData = JSON.parse(useLoaderData() as string) as HomePageLoaderDataProps;
+    console.log("pictures",loaderData.pictures)
     const [visible,setVisible]=React.useState<boolean>(false);
     const [selectPictureIndex,setSelectPictureIndex]=React.useState<number>(0);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+
+    const {state,dispatch} = React.useContext(GlobalShareContext);
+   // dispatch({type:"set",payload:pictures})
+    console.log("state",state)
+
+    useEffect(
+        ()=>{dispatch({type:'set',payload:loaderData.pictures.map((picture)=>{
+            return{
+                id:picture.id,
+                name:picture.name,
+                url:picture.url,
+                time:new Date(picture.time),
+            } as PhotoProps
+        })})},[]
+    )
+
+    console.log("state",state)
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -108,12 +116,12 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
         setIsModalOpen(false);
     };
 
-    console.log(pictures)
+    console.log(state.photo)
 
     let length=0;
-    for(let i=0;i<pictures.length;i++)
+    for(let i=0;i<state.photo.length;i++)
     {
-        length+=pictures[i].url.length;
+        length+=state.photo[i].url.length;
     }
 
     console.log(length)
@@ -131,7 +139,7 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
     const displayPictures=()=>
     {   
         let DateMap:Map<string,PhotoProps[]> =new Map();
-        pictures.forEach((picture,index)=>{
+        state.photo.forEach((picture,index)=>{
             const time = displayTime(picture.time);
             if(DateMap.has(time))
             {
@@ -177,17 +185,15 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
                 </div>
                 <div style={{display:'none'}}>
                     <Image.PreviewGroup preview={{visible,onVisibleChange:(vis)=>setVisible(vis),current:selectPictureIndex}}>
-                        {pictures.map((picture,index)=>{return <Image placeholder key={index} src={`data:image/jpeg;base64,${picture.url}`}/>})}
+                        {state.photo.map((picture,index)=>{return <Image placeholder key={index} src={`data:image/jpeg;base64,${picture.url}`}/>})}
                     </Image.PreviewGroup>
                 </div>
-                <DeletePicturesModal onOk={handleOk} onCancel={handleCancel} pictures={pictures} setPictures={setPictures} open={isModalOpen}/>
+                <DeletePicturesModal onOk={handleOk} onCancel={handleCancel} pictures={state.photo} setPictures={setPictures} open={isModalOpen}/>
             </div>
         )
     }
 
-    console.log(pictures)
-
-    if(pictures===undefined||pictures===null||pictures.length===0)
+    if(state.photo===undefined||state.photo===null||state.photo.length===0)
     return (
         <div style={homePageStyle}>
             {emptyHomePageContent()}

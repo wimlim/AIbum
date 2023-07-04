@@ -5,19 +5,32 @@ import {RouterProvider} from "react-router-dom";
 import {AIbum_router} from "./AIbum_router";
 import "./index.css";
 import {store} from "./store";
-import {Provider} from "react-redux";
-import exp from 'constants';
+import { initialState, GlobalShareReducer, GlobalShareContext, InitialStateProps, GlobalShareContextProps } from './utils/GlobalShareReducer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+const App:React.FC = ()=>{
+
+  const [state,dispatch] = React.useReducer(GlobalShareReducer,initialState);
+
+  const store:GlobalShareContextProps = {
+    state:state,
+    dispatch:dispatch
+  }
+
+  return (
+    <React.StrictMode>
+      <GlobalShareContext.Provider value={store}>
+        <RouterProvider router={AIbum_router}/>
+      </GlobalShareContext.Provider>
+    </React.StrictMode>
+  )
+}
+
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={AIbum_router}/>
-    </Provider>
-  </React.StrictMode>
+  <App/>
 );
 
 // If you want to start measuring performance in your app, pass a function

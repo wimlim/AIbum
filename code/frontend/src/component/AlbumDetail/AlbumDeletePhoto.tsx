@@ -6,6 +6,7 @@ import { Button, Modal, Tooltip, message,Checkbox,Image } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { setInterval } from "timers/promises";
+import { GlobalShareContext } from "../../utils/GlobalShareReducer";
 
 interface AlbumDeletePhotoProps {
     RightStyle: React.CSSProperties
@@ -18,26 +19,9 @@ export const AlbumDeletePhoto: React.FC<AlbumDeletePhotoProps> = (props) => {
     const { RightStyle,album } = props;
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [selectedPhotoIds, setSelectedPhotoIds] = React.useState<number[]>([]);
-    const [allPhotos, setAllPhotos] = React.useState<PhotoProps[]>([]);
+    const {state} = React.useContext(GlobalShareContext);
+    const allPhotos=state.photo;
 
-    useEffect(
-        ()=>
-        {
-            getPhotos({}).then(
-                (response)=>response.json()
-            ).then(
-                (data:BackendPictureProps[])=>{
-                        setAllPhotos(data.map(
-                        (picture)=>{
-                            return {
-                                id:picture.id,
-                                name:picture.name,
-                                url:picture.image_data,
-                                time:new Date(picture.date),
-                            } as PhotoProps
-                        }
-                    ))}
-            )},[])
 
     const showModal = () => {
         setIsModalOpen(true);
