@@ -20,6 +20,7 @@ const App:React.FC = ()=>{
   useEffect(
     ()=>
     {
+      if(window.location.pathname==="/login")return;
       let pictures:PhotoProps[]=[];
       getPhotos({}).then(
           (response)=>{
