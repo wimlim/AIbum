@@ -69,7 +69,6 @@ const displayTime:(data:Date)=>string = (data:Date)=>
     const today = new Date();       //今天
     const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);//昨天
     const beforeYesterday = new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000);//前天
-    console.log(typeof(data))
     if(today.getFullYear()===data.getFullYear()&&today.getMonth()===data.getMonth()&&today.getDate()===data.getDate())return "今天";
     else if(yesterday.getFullYear()===data.getFullYear()&&yesterday.getMonth()===data.getMonth()&&yesterday.getDate()===data.getDate())return "昨天";
     else if(beforeYesterday.getFullYear()===data.getFullYear()&&beforeYesterday.getMonth()===data.getMonth()&&beforeYesterday.getDate()===data.getDate())return "前天";
@@ -79,15 +78,12 @@ const displayTime:(data:Date)=>string = (data:Date)=>
 export const HomePage:React.FC<HomePageProps> =(props)=>{
 
     const loaderData = JSON.parse(useLoaderData() as string) as HomePageLoaderDataProps;
-    console.log("pictures",loaderData.pictures)
     const [visible,setVisible]=React.useState<boolean>(false);
     const [selectPictureIndex,setSelectPictureIndex]=React.useState<number>(0);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
     const {state,dispatch} = React.useContext(GlobalShareContext);
    // dispatch({type:"set",payload:pictures})
-    console.log("state",state)
-
     useEffect(
         ()=>{dispatch({type:'set',payload:loaderData.pictures.map((picture)=>{
             return{
@@ -99,7 +95,7 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
         })})},[]
     )
 
-    console.log("state",state)
+    console.log("state now is :",state)
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -112,16 +108,6 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    console.log(state.photo)
-
-    let length=0;
-    for(let i=0;i<state.photo.length;i++)
-    {
-        length+=state.photo[i].url.length;
-    }
-
-    console.log(length)
 
     const emptyHomePageContent=()=>
     {
@@ -147,8 +133,6 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
                 DateMap.set(time,[picture]);
             }
         })
-        console.log(DateMap)
-        console.log(Array.from(DateMap))
         return(
             <div>
                 {
