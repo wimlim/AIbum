@@ -4,8 +4,8 @@
  */
 
 import React from 'react'
-import { Button, Dropdown, Layout, MenuProps, Tooltip, Upload, UploadProps } from 'antd'
-import { CloseCircleOutlined, DeleteOutlined, FileAddOutlined, LeftOutlined, MoreOutlined, PictureFilled, ShareAltOutlined } from '@ant-design/icons'
+import { Button, Dropdown, MenuProps, Tooltip } from 'antd'
+import { DeleteOutlined, LeftOutlined, MoreOutlined, ShareAltOutlined } from '@ant-design/icons'
 import { AlbumProps } from '../../defaultConfiguration'
 import { deleteAlbum } from '../../server/AlbumServer'
 import { useNavigate } from 'react-router-dom'

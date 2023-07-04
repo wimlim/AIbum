@@ -6,10 +6,8 @@
 
 import { Button, Image } from "antd"
 import index from "../assets/img/index.png"
-import React, { useEffect } from "react";
-import { BackendPictureProps, PhotoProps } from "../defaultConfiguration";
-import { LoaderFunction, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
-import { getPhotos } from "../server/PhotoServer";
+import React from "react";
+import { PhotoProps } from "../defaultConfiguration";
 import { setPictures } from "../picturesSlice";
 import { DeletePicturesModal } from "./DeletePhotosModal";
 import { GlobalShareContext } from "../utils/GlobalShareReducer";
@@ -17,10 +15,6 @@ import { GlobalShareContext } from "../utils/GlobalShareReducer";
 interface HomePageProps {
 }
 
-interface HomePageLoaderDataProps
-{
-    pictures:PhotoProps[]
-}
 
 
 const homePageStyle:React.CSSProperties = {
@@ -47,7 +41,7 @@ export const HomePage:React.FC<HomePageProps> =(props)=>{
     const [selectPictureIndex,setSelectPictureIndex]=React.useState<number>(0);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
-    const {state,dispatch} = React.useContext(GlobalShareContext);
+    const {state} = React.useContext(GlobalShareContext);
    // dispatch({type:"set",payload:pictures})
     console.log("state now is :",state)
 
