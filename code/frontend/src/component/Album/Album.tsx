@@ -9,7 +9,6 @@ import { getAlbums, getFacesAlbum, getTagsAlbum } from "../../server/AlbumServer
 import emptyAlbum from "../../assets/img/emptyAlbum.png"
 import { Button, Divider, Form, Image, Modal, Space, message,} from "antd";
 import { AlbumCard } from "./AlbumCard";
-import { Link } from "react-router-dom";
 import { BackendAlbumProps,AlbumProps } from "../../defaultConfiguration";
 import { createAlbum } from "../../server/AlbumServer";
 import Input from "antd/lib/input";
@@ -36,8 +35,9 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
     };
 
     console.log("albums",albums);
-    useEffect(()=>{
-        console.log("useEffect")
+
+    const updateAlbums=()=>
+    {
         getAlbums(
             {
                 param:{},
@@ -52,6 +52,10 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
                 ))
             }
         )
+    }
+    useEffect(()=>{
+        console.log("useEffect")
+        updateAlbums();
     },[])
 
     const createAlbumDialog=()=>
@@ -73,7 +77,7 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
                                 messageApi.success("创建成功");
                                 setIsModalOpen(false);
                                 values.albumName="";
-                                window.location.reload();
+                                updateAlbums();
                             }
                             else
                             {
@@ -127,7 +131,8 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
                 if(response.ok)
                 {
                     console.log(response);
-                    setTimeout(()=>window.location.reload(),1000)
+                    message.success("图像分类成功");
+                    setTimeout(()=>updateAlbums(),1000)
 
                 }
                 return response.json();
@@ -143,7 +148,8 @@ export const Album:React.FC<AlbumComponentProps> =()=>{
                 if(response.ok)
                 {
                     console.log(response);
-                    setTimeout(()=>window.location.reload(),1000)
+                    message.success("人脸聚类成功");
+                    setTimeout(()=>updateAlbums(),1000)
 
                 }
                 return response.json();

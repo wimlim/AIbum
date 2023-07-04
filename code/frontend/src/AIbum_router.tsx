@@ -10,11 +10,8 @@ import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
 import { Help } from "./component/Help";
 import { Tool } from "./component/Tool";
-import { AlbumProps, BackendAlbumProps, BackendPictureProps, PhotoProps } from "./defaultConfiguration";
-import { getPhotos } from "./server/PhotoServer";
+import { AlbumProps } from "./defaultConfiguration";
 import { AlbumDetailView } from "./view/AlbumDetailView";
-import {homepageLoader} from "./component/HomePage"
-import { type } from "os";
 import { getAlbum} from "./server/AlbumServer";
 
 const checkAuth= async ()=>{
@@ -69,7 +66,6 @@ export const router:RouteObject[]=[
                 path:"/index",
                 id:"homepage",
                 element:<HomePage/>,
-                loader:homepageLoader,
             },
             {
                 path:"/albums",
