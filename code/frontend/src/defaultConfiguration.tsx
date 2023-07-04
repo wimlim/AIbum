@@ -15,6 +15,7 @@ export interface defaultConfigurationType
     albumDeletePhotoPathName:string;          //相册删除图片路径
     getTagsAlbumPathName:string;                //获取标签相册路径
     getFacesAlbumPathName:string;               //获取人脸相册路径
+    profileEditPathName:string;                 //修改用户信息路径
 }   
 
 export interface BackendPictureProps{
@@ -70,5 +71,6 @@ export const defaultConfiguration:defaultConfigurationType = {
     deletePhotoPathName:'delete/',
     albumDeletePhotoPathName:'album/delete/picture',
     getTagsAlbumPathName:'album/getTags',
-    getFacesAlbumPathName:'album/getFaces'
+    getFacesAlbumPathName:'album/getFaces',
+    profileEditPathName:'profile/edit',
 }
