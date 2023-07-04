@@ -1,4 +1,3 @@
-import { get } from "http";
 
 export interface defaultConfigurationType
 {
@@ -53,7 +52,8 @@ export interface BackendUserAuthProps{
 
 export interface BackendUserInfoProps{
     username:string;                                //用户名
-    userid:number;                              //用户id
+    userid:number;                                  //用户id
+    email:string;                               //用户邮箱
 }
 
 export const defaultConfiguration:defaultConfigurationType = {

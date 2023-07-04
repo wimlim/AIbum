@@ -6,11 +6,12 @@
 
 import React from "react";
 import {Form, Input, Button, message} from 'antd'
-import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import {UserOutlined, LockOutlined, MailOutlined} from '@ant-design/icons';
 import { getUserAuth, setUserAuth } from "../server/UserAuth";
 import { type } from "os";
 import { getUserInfo, registerUser } from "../server/UserServer";
 import { BackendUserInfoProps } from "../defaultConfiguration";
+import { Rule } from "antd/es/form";
 interface LoginBoxProps {
 
 }
@@ -23,6 +24,7 @@ export interface LoginProps{
 export interface RegisterProps{
     account:string,
     password:string,
+    email:string;                               //用户邮箱
 }
 
 export const LoginBox:React.FC<LoginBoxProps> = () => {
@@ -105,22 +107,42 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
     const accountRule=[
         {
             required:true,
-            message:"Please input your username!"
+            message:"请输入你的账号"
         },
     ]
 
     const passwordRule=[
         {
             required:true,
-            message:"Please input your password!"
+            message:"请输入你的密码"
         },
     ]
     
-    const confirmRule=[
+    const confirmRule:Rule[]=[
         {
             required:true,
-            message:"Please confirm your password!"
+            message:"请确认你的密码"
         },
+        //TODO:添加密码一致性检查
+        ({getFieldValue})=>({
+            validator(_,value){
+                if(!value||getFieldValue('password')===value){
+                    return Promise.resolve();
+                }
+                return Promise.reject(new Error("两次输入的密码不一致"))
+            }
+        })
+    ]
+
+    const emailRule:Rule[]=[
+        {
+            required:true,
+            message:"请输入你的邮箱"
+        },
+        {
+            type:'email',
+            message:"请输入正确的邮箱"
+        }
     ]
 
     const loginContent=()=>
@@ -171,9 +193,16 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
                 </Form.Item>
                 <Form.Item
                     name="confirm"
+                    dependencies={['password']}
                     rules={confirmRule}
                 >
                     <Input.Password prefix={<LockOutlined/>} placeholder="Confirm Password"/>
+                </Form.Item>
+                <Form.Item
+                    name="email"
+                    rules={emailRule}
+                >
+                    <Input prefix={<MailOutlined/>} placeholder="Email" name="email"/>
                 </Form.Item>
                 <div style={{float:'left'}}>{backButton()}</div>
                 <div style={{float:'right'}}>{registerButton()}</div>
