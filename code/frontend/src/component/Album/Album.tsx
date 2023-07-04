@@ -12,7 +12,6 @@ import { AlbumCard } from "./AlbumCard";
 import { BackendAlbumProps,AlbumProps } from "../../defaultConfiguration";
 import { createAlbum } from "../../server/AlbumServer";
 import Input from "antd/lib/input";
-import { update } from "js-md5";
 
 interface AlbumComponentProps {
 }

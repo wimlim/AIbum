@@ -4,8 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import {RouterProvider} from "react-router-dom";
 import {AIbum_router} from "./AIbum_router";
 import "./index.css";
-import {store} from "./store";
-import { initialState, GlobalShareReducer, GlobalShareContext, InitialStateProps, GlobalShareContextProps } from './utils/GlobalShareReducer';
+import { initialState, GlobalShareReducer, GlobalShareContext, GlobalShareContextProps } from './utils/GlobalShareReducer';
 import { getPhotos } from './server/PhotoServer';
 import { PhotoProps, BackendPictureProps } from './defaultConfiguration';
 
