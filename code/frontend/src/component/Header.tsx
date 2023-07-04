@@ -3,11 +3,11 @@
  * @name Header.tsx
  * @description header: search,upload,settings,help,logout
  */
-import { LogoutOutlined, QuestionOutlined, SettingOutlined } from '@ant-design/icons';
+import { LogoutOutlined, QuestionOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Avatar, Button, Dropdown, Input, Space,Tooltip } from 'antd';
 import type { MenuProps } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactLogo from '../logo.svg';
 import { removeUserAuth } from '../server/UserAuth';
 import { UploadPicture } from './UploadPicture';
@@ -18,22 +18,31 @@ interface HeaderProps {
 
 }
 
-const uesrMenuItems:MenuProps['items'] = [
-  {
-    key: '1',
-    label: '个人中心',
-  },
-  {
-    key: '2',
-    label: (
-      <Button icon={<LogoutOutlined/>} type='text' size='small' onClick={()=>{removeUserAuth();window.location.reload();}}>
-        退出登录
-      </Button>
-    )
-  },
-]
+
 
 export const Header: React.FC<HeaderProps> = () => {
+
+    const navigate = useNavigate();
+
+    const uesrMenuItems:MenuProps['items'] = [
+      {
+        key: '1',
+        label: (
+          <Button icon={<UserOutlined/>} type='text' size='small' onClick={()=>{navigate('/profile')}}>
+            个人信息
+          </Button>
+        )
+      },
+      {
+        key: '2',
+        label: (
+          <Button icon={<LogoutOutlined/>} type='text' size='small' onClick={()=>{removeUserAuth();window.location.reload();}}>
+            退出登录
+          </Button>
+        )
+      },
+    ];
+
     return (
         <Space>
             <Search

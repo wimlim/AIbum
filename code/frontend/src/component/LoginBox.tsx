@@ -6,11 +6,12 @@
 
 import React from "react";
 import {Form, Input, Button, message} from 'antd'
-import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import {UserOutlined, LockOutlined, MailOutlined} from '@ant-design/icons';
 import { getUserAuth, setUserAuth } from "../server/UserAuth";
 import { type } from "os";
 import { getUserInfo, registerUser } from "../server/UserServer";
 import { BackendUserInfoProps } from "../defaultConfiguration";
+import { Rule } from "antd/es/form";
 interface LoginBoxProps {
 
 }
@@ -23,6 +24,7 @@ export interface LoginProps{
 export interface RegisterProps{
     account:string,
     password:string,
+    email:string;                               //用户邮箱
 }
 
 export const LoginBox:React.FC<LoginBoxProps> = () => {
@@ -33,7 +35,7 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
 
     const onFinishLogin=(values:LoginProps)=>{
         console.log("login form values",values)
-        //TODO:发送数据给后端请求用户信息
+        //发送数据给后端请求用户信息
         getUserInfo({formdata:values})
         .then((response)=>{
             if(response.status===200)return response.json();
@@ -46,9 +48,10 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
                 content:'登录成功'
             })
             console.log(typeof(data))
-            const {username,userid}=data.data;
+            const {username,userid,email}=data.data;
             sessionStorage.setItem("username",username)
             sessionStorage.setItem("userid",userid.toString())
+            sessionStorage.setItem("email",email)
             setUserAuth(true)
             window.location.reload();
         })
@@ -62,7 +65,7 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
 
     const onFinishRegister=(values:RegisterProps)=>{
         console.log("register form values",values)
-        //TODO:发送数据给后端
+        //发送数据给后端
         registerUser(values)
         .then(response=>{
             if(response.status===200)return response.json();
@@ -105,22 +108,42 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
     const accountRule=[
         {
             required:true,
-            message:"Please input your username!"
+            message:"请输入你的账号"
         },
     ]
 
     const passwordRule=[
         {
             required:true,
-            message:"Please input your password!"
+            message:"请输入你的密码"
         },
     ]
     
-    const confirmRule=[
+    const confirmRule:Rule[]=[
         {
             required:true,
-            message:"Please confirm your password!"
+            message:"请确认你的密码"
         },
+        //添加密码一致性检查
+        ({getFieldValue})=>({
+            validator(_,value){
+                if(!value||getFieldValue('password')===value){
+                    return Promise.resolve();
+                }
+                return Promise.reject(new Error("两次输入的密码不一致"))
+            }
+        })
+    ]
+
+    const emailRule:Rule[]=[
+        {
+            required:true,
+            message:"请输入你的邮箱"
+        },
+        {
+            type:'email',
+            message:"请输入正确的邮箱"
+        }
     ]
 
     const loginContent=()=>
@@ -171,9 +194,16 @@ export const LoginBox:React.FC<LoginBoxProps> = () => {
                 </Form.Item>
                 <Form.Item
                     name="confirm"
+                    dependencies={['password']}
                     rules={confirmRule}
                 >
                     <Input.Password prefix={<LockOutlined/>} placeholder="Confirm Password"/>
+                </Form.Item>
+                <Form.Item
+                    name="email"
+                    rules={emailRule}
+                >
+                    <Input prefix={<MailOutlined/>} placeholder="Email" name="email"/>
                 </Form.Item>
                 <div style={{float:'left'}}>{backButton()}</div>
                 <div style={{float:'right'}}>{registerButton()}</div>
