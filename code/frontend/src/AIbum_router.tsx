@@ -10,12 +10,10 @@ import { getUserAuth } from "./server/UserAuth";
 import { Settings } from "./component/Settings";
 import { Help } from "./component/Help";
 import { Tool } from "./component/Tool";
-import { AlbumProps, BackendAlbumProps, BackendPictureProps, PhotoProps } from "./defaultConfiguration";
-import { getPhotos } from "./server/PhotoServer";
+import { AlbumProps } from "./defaultConfiguration";
 import { AlbumDetailView } from "./view/AlbumDetailView";
-import {homepageLoader} from "./component/HomePage"
-import { type } from "os";
-import { getAlbum, getAlbums } from "./server/AlbumServer";
+import { getAlbum} from "./server/AlbumServer";
+import { UserProfile } from "./component/UserProfile";
 
 const checkAuth= async ()=>{
     const auth = getUserAuth();
@@ -52,7 +50,7 @@ const albumDetailLoader:LoaderFunction=async (props:LoaderFunctionArgs)=>{
 
 
 
-const router:RouteObject[]=[
+export const router:RouteObject[]=[
     {
         path:"/login",
         id:"login",
@@ -69,7 +67,6 @@ const router:RouteObject[]=[
                 path:"/index",
                 id:"homepage",
                 element:<HomePage/>,
-                loader:homepageLoader,
             },
             {
                 path:"/albums",
@@ -90,6 +87,11 @@ const router:RouteObject[]=[
                 path:"/tool",
                 id:"tool",
                 element:<Tool/>,
+            },
+            {
+                path:'/profile',
+                id:"profile",
+                element:<UserProfile/>,
             },
             
         ]

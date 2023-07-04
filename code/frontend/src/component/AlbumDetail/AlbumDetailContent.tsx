@@ -1,9 +1,9 @@
 
-import React, { useEffect } from 'react';
-import {Checkbox, Image} from 'antd';
+import React from 'react';
+import {Image} from 'antd';
 import { Layout } from 'antd';
-import { AlbumProps, BackendPictureProps, PhotoProps } from '../../defaultConfiguration';
-import { getPhotos } from '../../server/PhotoServer';
+import { AlbumProps} from '../../defaultConfiguration';
+import { GlobalShareContext } from '../../utils/GlobalShareReducer';
 
 interface AlbumDetailContentProps {
     album:AlbumProps
@@ -21,39 +21,19 @@ export const AlbumDetailContent: React.FC<AlbumDetailContentProps> = (props) => 
 
     const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
     const [visible, setVisible] = React.useState<boolean>(false);
-    const [allPhotos, setAllPhotos] = React.useState<PhotoProps[]>([]);
+
+    const {state} = React.useContext(GlobalShareContext);
+    const allPhotos=state.photo;
 
     console.log(allPhotos)
 
     const displayPhoto = allPhotos.filter((photo)=>{
         return album.photos.some((albumPhoto)=>{
-            return albumPhoto.id===photo.id;
+            return albumPhoto===photo.id;
         })
     })
 
     console.log(displayPhoto)
-
-    useEffect(
-        ()=>
-        {
-            getPhotos({}).then(
-                (response)=>response.json()
-            ).then(
-                (data:BackendPictureProps[])=>{
-                        setAllPhotos(data.map(
-                            (picture)=>{
-                                return {
-                                    id:picture.id,
-                                    name:picture.name,
-                                    url:picture.image_data,
-                                    time:new Date(picture.date),
-                                } as PhotoProps
-                            } 
-                        ))
-                    }
-            )
-        },[]
-    )
 
     const emptyContent=()=>
     {

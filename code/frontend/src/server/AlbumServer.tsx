@@ -2,7 +2,7 @@
 import exp from "constants";
 import { defaultConfiguration,BackendAlbumProps, AlbumProps } from "../defaultConfiguration"
 
-const {backendUrl,createAlbumPathName,getAlbumsPathName,getAlbumPathName,deleteAlbumPathName,albumDeletePhotoPathName,albumAddPhotoPathName} = defaultConfiguration;
+const {backendUrl,createAlbumPathName,getAlbumsPathName,getAlbumPathName,deleteAlbumPathName,albumDeletePhotoPathName,albumAddPhotoPathName,getTagsAlbumPathName,getFacesAlbumPathName} = defaultConfiguration;
 
 export const createAlbum = (albumName:string)=>
 {
@@ -24,7 +24,7 @@ export const createAlbum = (albumName:string)=>
 
 interface GetAlbumProps{
     param:{}|undefined,
-    callback:(data:AlbumProps[])=>void
+    callback:(data:BackendAlbumProps[])=>void
 }
 
 
@@ -107,4 +107,16 @@ export const albumDeletePhotos=(albumId:number,photoIds:number[])=>
             'Content-Type':'application/json'
         }
     })
+}
+
+export const getTagsAlbum=()=>
+{
+    const url = backendUrl + getTagsAlbumPathName+"?userid="+sessionStorage.getItem("userid");
+    return fetch(url,{method:'GET'});
+}
+
+export const getFacesAlbum=()=>
+{
+    const url = backendUrl + getFacesAlbumPathName+"?userid="+sessionStorage.getItem("userid");
+    return fetch(url,{method:'GET'});
 }
