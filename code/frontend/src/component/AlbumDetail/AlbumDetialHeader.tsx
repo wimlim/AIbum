@@ -4,8 +4,8 @@
  */
 
 import React from 'react'
-import { Button, Dropdown, Layout, MenuProps, Tooltip, Upload, UploadProps } from 'antd'
-import { CloseCircleOutlined, DeleteOutlined, FileAddOutlined, LeftOutlined, MoreOutlined, PictureFilled, ShareAltOutlined } from '@ant-design/icons'
+import { Button, Dropdown, MenuProps, Tooltip } from 'antd'
+import { DeleteOutlined, LeftOutlined, MoreOutlined, ShareAltOutlined } from '@ant-design/icons'
 import { AlbumProps } from '../../defaultConfiguration'
 import { deleteAlbum } from '../../server/AlbumServer'
 import { useNavigate } from 'react-router-dom'
@@ -14,6 +14,7 @@ import { AlbumDeletePhoto } from './AlbumDeletePhoto'
 
 interface AlbumDetailHeaderProps {
     album:AlbumProps
+    setAlbum:Function
 }
 
 const AlbumDetailHeaderStyle:React.CSSProperties = {
@@ -64,15 +65,15 @@ export const AlbumDetailHeader: React.FC<AlbumDetailHeaderProps> = (props) => {
         return (
             <div style={AlbumDetailHeaderStyle}>
                 <Tooltip title='返回'>
-                    <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large' href='/albums'/>
+                    <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large' onClick={()=>{navigate('/albums')}}/>
                 </Tooltip>
                 <Dropdown 
                     menu={{items:dropDownMenuItems,onClick:onClick}}
                 >
                     <Button icon={<MoreOutlined/>} style={RightStyle} shape='circle' size='large'/>
                 </Dropdown>
-                <AlbumDeletePhoto album={album} RightStyle={RightStyle}/>
-               <AlbumAddPicture RightStyle={RightStyle} album={album}/>
+                <AlbumDeletePhoto album={album} RightStyle={RightStyle} setAlbum={props.setAlbum}/>
+               <AlbumAddPicture RightStyle={RightStyle} album={album} setAlbum={props.setAlbum}/>
                 <Tooltip title='分享'>
                     <Button icon={<ShareAltOutlined/>} style={RightStyle} shape='circle' size='large'/>
                 </Tooltip>

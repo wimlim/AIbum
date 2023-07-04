@@ -1,3 +1,4 @@
+
 export interface defaultConfigurationType
 {
     backendUrl:string;                          //后端网址
@@ -12,6 +13,9 @@ export interface defaultConfigurationType
     deletePhotoPathName:string;               //删除图片路径
     albumAddPhotoPathName:string;             //相册添加图片路径
     albumDeletePhotoPathName:string;          //相册删除图片路径
+    getTagsAlbumPathName:string;                //获取标签相册路径
+    getFacesAlbumPathName:string;               //获取人脸相册路径
+    profileEditPathName:string;                 //修改用户信息路径
 }   
 
 export interface BackendPictureProps{
@@ -32,14 +36,14 @@ export interface PhotoProps{
 export interface BackendAlbumProps{
     id:number;                                  //相册id
     name:string;                                //相册名
-    //time:Date;                                  //相册创建时间
-    photos:PhotoProps[];                    //相册内图片
+    //time:Date;                                 //相册创建时间
+    photos:PhotoProps[];                            //相册内图片id
 }
 
 export interface AlbumProps{
     id:number;                                  //相册id
     name:string;                                //相册名
-    photos:PhotoProps[];                    //相册内图片
+    photos:number[];                            //相册内图片
 }
 
 export interface BackendUserAuthProps{
@@ -49,7 +53,8 @@ export interface BackendUserAuthProps{
 
 export interface BackendUserInfoProps{
     username:string;                                //用户名
-    userid:number;                              //用户id
+    userid:number;                                  //用户id
+    email:string;                               //用户邮箱
 }
 
 export const defaultConfiguration:defaultConfigurationType = {
@@ -64,5 +69,8 @@ export const defaultConfiguration:defaultConfigurationType = {
     deleteAlbumPathName:'album/delete',
     albumAddPhotoPathName:'album/add',
     deletePhotoPathName:'delete/',
-    albumDeletePhotoPathName:'album/delete/picture'
+    albumDeletePhotoPathName:'album/delete/picture',
+    getTagsAlbumPathName:'album/getTags',
+    getFacesAlbumPathName:'album/getFaces',
+    profileEditPathName:'profile/edit',
 }
