@@ -7,6 +7,7 @@ import "./index.css";
 import { initialState, GlobalShareReducer, GlobalShareContext, GlobalShareContextProps } from './utils/GlobalShareReducer';
 import { getPhotos } from './server/PhotoServer';
 import { PhotoProps, BackendPictureProps } from './defaultConfiguration';
+import { message } from 'antd';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,10 +21,10 @@ const App:React.FC = ()=>{
     ()=>
     {
       let pictures:PhotoProps[]=[];
-
       getPhotos({}).then(
           (response)=>{
               console.log(response)   
+              message.info("正在获取图片信息");
               return response.json();
           }
       ).then(
@@ -39,6 +40,7 @@ const App:React.FC = ()=>{
                   } 
               )
               dispatch({type:"set",payload:pictures});
+              message.success("图片信息获取成功");
           }
       ).catch(
           (error)=>{

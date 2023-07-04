@@ -65,7 +65,7 @@ export const AlbumDetailHeader: React.FC<AlbumDetailHeaderProps> = (props) => {
         return (
             <div style={AlbumDetailHeaderStyle}>
                 <Tooltip title='返回'>
-                    <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large' href='/albums'/>
+                    <Button shape='circle' style={LeftStyle} icon={<LeftOutlined />} size='large' onClick={()=>{navigate('/albums')}}/>
                 </Tooltip>
                 <Dropdown 
                     menu={{items:dropDownMenuItems,onClick:onClick}}

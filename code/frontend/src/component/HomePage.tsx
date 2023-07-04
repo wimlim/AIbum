@@ -22,40 +22,6 @@ interface HomePageLoaderDataProps
     pictures:PhotoProps[]
 }
 
-export const homepageLoader:LoaderFunction=async (props:LoaderFunctionArgs)=>{
-
-    let pictures:PhotoProps[]=[];
-
-    await getPhotos({}).then(
-        (response)=>{
-            console.log(response)   
-            return response.json();
-        }
-    ).then(
-        (data:BackendPictureProps[])=>{
-            console.log(data)
-            pictures= data.map(
-                (picture)=>{
-                    return {
-                        id:picture.id,
-                        name:picture.name,
-                        url:picture.image_data,
-                        time:new Date(picture.date),
-                    } as PhotoProps
-                } 
-            )
-        }
-    ).catch(
-        (error)=>{
-            console.log(error);
-        }
-    )
-
-    return new Response(
-        JSON.stringify({pictures:pictures}),
-    )
-
-}
 
 const homePageStyle:React.CSSProperties = {
     display:"flex",
@@ -77,24 +43,12 @@ const displayTime:(data:Date)=>string = (data:Date)=>
 
 export const HomePage:React.FC<HomePageProps> =(props)=>{
 
-    const loaderData = JSON.parse(useLoaderData() as string) as HomePageLoaderDataProps;
     const [visible,setVisible]=React.useState<boolean>(false);
     const [selectPictureIndex,setSelectPictureIndex]=React.useState<number>(0);
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
     const {state,dispatch} = React.useContext(GlobalShareContext);
    // dispatch({type:"set",payload:pictures})
-    useEffect(
-        ()=>{dispatch({type:'set',payload:loaderData.pictures.map((picture)=>{
-            return{
-                id:picture.id,
-                name:picture.name,
-                url:picture.url,
-                time:new Date(picture.time),
-            } as PhotoProps
-        })})},[]
-    )
-
     console.log("state now is :",state)
 
     const showModal = () => {
